@@ -492,6 +492,7 @@ function MPPopUpMenu(parent, menu, callback)//parent为点击目标 menu为弹�
     })
 }
 
+//检查某点是否在某个元素内
 function MPCheckInEle(node, point)
 {
     var w = $(window);
@@ -511,4 +512,9 @@ function MPCheckInEle(node, point)
     }
 }
 
-
+//获取地址栏的某个参数内容
+function MPGetQueryString(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) return unescape(r[2]); return null;
+}

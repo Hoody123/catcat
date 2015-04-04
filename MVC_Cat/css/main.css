@@ -1086,12 +1086,6 @@ table {
 .widget-package .btn2:hover {
   background-image: linear-gradient(#ffffff, #ebebeb);
 }
-.widget-package .follow:after {
-  content: "关注";
-}
-.widget-package .unfollow:after {
-  content: "已关注";
-}
 .widget-package .edit:after {
   content: "编辑";
 }

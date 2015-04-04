@@ -8,11 +8,10 @@ MPResetPasswordDialog = {
             if (!MPCheckEmail(inputemail.val())) {
                 return;
             }
-
             $.post(host + "/ajax/reset-password", { email: MPHtmlEncode(inputemail.val()) }, function (data) {
                 if (data.code == 0) {
                     dialog.Close();
-                    MPMessageBox.New(MPMessageBox.Icons.OK, "重置密码邮件已发送到您的邮箱,请注意查收");
+                    MPResetPasswordSuccessDialog.New(inputemail.val());
                 }
                 else {
                     MPMessageBox.New(MPMessageBox.Icons.Error, data.msg);

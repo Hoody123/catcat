@@ -187,6 +187,7 @@
     <Content Include="js\Dialog\LoginDialog.js" />
     <Content Include="js\Dialog\MessageBox.js" />
     <Content Include="js\Dialog\ResetPasswordDialog.js" />
+    <Content Include="js\Dialog\ResetPasswordSuccessDialog.js" />
     <Content Include="js\Dialog\SignUpDialog.js" />
     <Content Include="js\Dialog\SignUpSuccessDialog.js" />
     <Content Include="js\Dialog\TitleDialog.js" />
@@ -212,7 +213,7 @@
     <Content Include="js\Render\Render.Head.js" />
     <Content Include="js\Render\Render.js" />
     <Content Include="js\Render\RenderElement.js" />
-    <Content Include="js\ResetPassword.js" />
+    <Content Include="js\reset-password.js" />
     <Content Include="js\search.js" />
     <Content Include="js\signup-email.js" />
     <Content Include="js\Template\Page\search.js" />

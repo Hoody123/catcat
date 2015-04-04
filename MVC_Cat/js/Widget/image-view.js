@@ -53,7 +53,7 @@ MPWidget.ImageView.Bind = function () {
         var id = t.attr("data-id");
         var hash = t.attr("data-hash");
        //待处理
-        MPObject.Image.Resava(id, hash);
+        MPObject.Image.Resave(id, hash);
     }
 
     function edit_click() {

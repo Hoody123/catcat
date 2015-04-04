@@ -44,7 +44,7 @@ MPObject.Image.fw236 = function (image) {
     return MPObject.Image._info(image, 236, "sq");
 }
 
-MPObject.Image.Resava = function (imageID, imageHash, description, source) {
+MPObject.Image.Resave = function (imageID, imageHash, description, source) {
     if (!MPCheckLogin()) {
         return;
     }
@@ -73,7 +73,7 @@ MPObject.Image.Edit = function (imageID, imageHash, description, source,callback
     var url = imageHost + "/" + imageHash + "_fw236";
     var dialog = MPCreateImageDialog.New(url, "编辑图片", description, true, source);
     dialog.onOK = function () {
-        $.post(host + "/ajax/resave", { image_id: imageID, package_id: dialog.packageId, description: dialog.description, source: dialog.source }, function (data) {
+        $.post(host + "/ajax/edit-image", { id: imageID, package_id: dialog.packageId, description: dialog.description, source: dialog.source }, function (data) {
             if (data.code == 0) {
                 var box = MPMessageBox.New(MPMessageBox.Icons.OK, "图片编辑成功");
                 box.onOK = function () {

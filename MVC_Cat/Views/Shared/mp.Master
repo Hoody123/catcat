@@ -22,6 +22,7 @@
     <script src="<%=ResolveClientUrl("~/js/Dialog/SignUpSuccessDialog.js") %>"></script>
     <script src="<%=ResolveClientUrl("~/js/Dialog/LoginDialog.js") %>"></script>
     <script src="<%=ResolveClientUrl("~/js/Dialog/ResetPasswordDialog.js") %>"></script>
+    <script src="<%=ResolveClientUrl("~/js/Dialog/ResetPasswordSuccessDialog.js") %>"></script>
     <script src="<%=ResolveClientUrl("~/js/Dialog/CreatePackageDialog.js") %>"></script>
     <script src="<%=ResolveClientUrl("~/js/Dialog/CreateImageDialog.js") %>"></script>
     <script src="<%=ResolveClientUrl("~/js/Dialog/UploadDialog.js") %>"></script>
