@@ -28,7 +28,7 @@ MPMessageBox = {
         box.ButtonOK.click(function ()
         {
             box.Close();
-            if(box.onOK!=null)
+            if(box.onOK)
             {
                 box.onOK();
             }

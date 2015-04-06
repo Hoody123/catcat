@@ -67,7 +67,7 @@ MPWidget.Image.Bind = function ()
         var hash = t.attr("data-hash");
         //获取要转存图片的描述内容用作初始描述
         var description = t.attr("data-description");
-        MPObject.Image.Resava(id, hash, description, "");
+        MPObject.Image.Resave(id, hash, description, "");
     }
 
     function praise_click()

@@ -13,7 +13,7 @@ MPTemplate.Widget.Image = function (data, options)
     if (data.user.id == MPData.user.id)
     {
         strVar += "<div class=\"right\">";
-        strVar += "    <div class=\"edit\" title=\"编辑\" data-id=\"{0}\" data-hash=\"{1}\" data-description=\"{2}\" >编辑<\/div>".Format(data.id, data.file.hash, data.description);
+        strVar += "    <div class=\"edit\" title=\"编辑\" data-id=\"{0}\" data-hash=\"{1}\" data-description=\"{2}\" data-packageid=\"{3}\" data-source=\"{4}\" >编辑<\/div>".Format(data.id, data.file.hash, data.description, data.package.id, data.source);
         strVar += "<\/div>";
     }
     else
@@ -35,8 +35,8 @@ MPTemplate.Widget.Image = function (data, options)
         strVar += "            <img src=\"{0}\" />".Format(fuser.Avt());
         strVar += "        <\/a>";
         strVar += "        <div class=\"text\">";
-        strVar += "            <div class=\"line\"><a href=\"{0}\">{1}<\/a><span>收集到<\/span><\/div>".Format(fuser.Home(), fuser.Name());
-        strVar += "            <div class=\"line\"><a href=\"{0}\">{1}<\/a><\/div>".Format("/package/" + data.package.id, data.package.title);
+        strVar += "            <div class=\"line\"><a class=\"user-name\" href=\"{0}\">{1}<\/a><span>收集到<\/span><\/div>".Format(fuser.Home(), fuser.Name());
+        strVar += "            <div class=\"line\"><a class=\"package-title\" href=\"{0}\">{1}<\/a><\/div>".Format("/package/" + data.package.id, data.package.title);
         strVar += "        <\/div>";
     }
     else if (options == MPTemplate.Widget.Image.Options.ShowSource)

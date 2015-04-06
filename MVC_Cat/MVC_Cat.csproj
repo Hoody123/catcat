@@ -149,6 +149,7 @@
     <Content Include="css\setting.css" />
     <Content Include="css\signup-email.css" />
     <Content Include="css\signup.css" />
+    <Content Include="dialogs\link.html" />
     <Content Include="dialogs\reset-password-success.html" />
     <Content Include="dialogs\reset-password.html" />
     <Content Include="favicon.ico" />
@@ -187,6 +188,7 @@
     <Content Include="js\Dialog\LoginDialog.js" />
     <Content Include="js\Dialog\MessageBox.js" />
     <Content Include="js\Dialog\ResetPasswordDialog.js" />
+    <Content Include="js\Dialog\ResetPasswordSuccessDialog.js" />
     <Content Include="js\Dialog\SignUpDialog.js" />
     <Content Include="js\Dialog\SignUpSuccessDialog.js" />
     <Content Include="js\Dialog\TitleDialog.js" />
@@ -212,13 +214,15 @@
     <Content Include="js\Render\Render.Head.js" />
     <Content Include="js\Render\Render.js" />
     <Content Include="js\Render\RenderElement.js" />
-    <Content Include="js\ResetPassword.js" />
+    <Content Include="js\reset-password.js" />
     <Content Include="js\search.js" />
     <Content Include="js\signup-email.js" />
     <Content Include="js\Template\Page\search.js" />
     <Content Include="js\Template\template.js" />
+    <Content Include="js\Template\Widget\comment.js" />
     <Content Include="js\Template\Widget\frame.js" />
     <Content Include="js\Template\Widget\image-view.js" />
+    <Content Include="js\Template\Widget\link.js" />
     <Content Include="js\user.js" />
     <Content Include="js\Widget\Frame.js" />
     <Content Include="js\Widget\image-view.js" />

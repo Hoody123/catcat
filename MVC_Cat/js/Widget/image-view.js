@@ -53,7 +53,7 @@ MPWidget.ImageView.Bind = function () {
         var id = t.attr("data-id");
         var hash = t.attr("data-hash");
        //待处理
-        MPObject.Image.Resava(id, hash);
+        MPObject.Image.Resave(id, hash);
     }
 
     function edit_click() {
@@ -77,17 +77,7 @@ MPWidget.ImageView.Bind = function () {
         }
         $.post(host + "/ajax/add-comment", { text: text, image_id: id }, function (data) {
             if (data.code == 0) {
-                var fuser2 = MPFormat.User.New(MPData.user);
-                var strVar = "";
-                strVar += "<div class=\"comment\">";
-                strVar += "<a class=\"avt\" href=\"{0}\">".Format(fuser2.Home());
-                strVar += "<img src=\"{0}\" />".Format(fuser2.Avt());
-                strVar += "<\/a>";
-                strVar += "<a class=\"name\">{0}<\/a>".Format(fuser2.Name());
-                strVar += "<div class=\"text\">{0}<\/div>".FormatNoEncode(mentionConvert(data.comment.text, data.comment.mentions));
-                strVar += "<\/div>";
-                var a = $(".image-view .comments");
-                a.prepend($(strVar));
+                $(".image-view .comments").prepend($(MPTemplate.Widget.Comment(data.comment)));
                 //成功的处理
             }
             else {
@@ -95,24 +85,4 @@ MPWidget.ImageView.Bind = function () {
             }
         }, "json");
     }
-}
-
-function mentionConvert(text, mentions) {
-    var str = "";
-    var begin = 0;
-    var end = 0;
-    for (var i = 0; i < mentions.length; i++) {
-        end = mentions[i].pos;
-        str += text.substring(begin, end);
-        begin = end++;
-        end = end + mentions[i].len;
-        str += "<a href=\"{0}\">".Format("/user/" + mentions[i].user_id);
-        str = str + text.substring(begin, end) + "</a>";
-        begin = end++;
-    }
-    if (end<text.length) {
-        end = text.length - 1;
-        str += text.substring(begin, end);
-    }
-    return str;
 }

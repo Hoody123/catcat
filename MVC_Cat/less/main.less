@@ -47,6 +47,12 @@
     }
 }
 
+.mp_textNoWrap() {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td {
     margin: 0;
     padding: 0;
@@ -725,15 +731,15 @@ table {
             background-repeat: no-repeat;
             background-position: center center;
 
-            & ok {
+            &.ok {
                 background-image: url(/img/ok_24_24.png);
             }
 
-            & error {
+            &.error {
                 background-image: url(/img/error_24_24.png);
             }
 
-            & warn {
+            &.warn {
                 background-image: url(/img/warn_24_24.png);
             }
         }
@@ -847,12 +853,18 @@ table {
                 .current {
                     .package-list-border;
                     cursor: pointer;
-                    line-height: @packageListHeight;
+                    height: @packageListHeight;
                     padding: 0 8px;
                     background-image: linear-gradient(darken(@baseWhite,2%),darken(@baseWhite,5%));
 
                     &:hover {
                         background-image: linear-gradient(darken(@baseWhite,4%),darken(@baseWhite,7%));
+                    }
+
+                    .name{
+                        .mp_textNoWrap;
+                        line-height:@packageListHeight;
+                        padding-right:10px;
                     }
 
                     .arrow {
@@ -882,6 +894,19 @@ table {
 
                     .filtrate {
                         display: none;
+
+                        .create{
+                            .mp_textNoWrap;
+                            line-height:30px;
+                            background-color:@baseBlue;
+                            color:@baseWhite;
+                            padding:0 10px;
+                            cursor:pointer;
+
+                            &:hover{
+                                background-color:lighten(@baseBlue,5%);
+                            }
+                        }
                     }
 
                     .filter {
@@ -890,7 +915,7 @@ table {
                         border-top: @innerBorder;
 
                         input {
-                            display: inline-block;
+                            .mp_input(290px,28px);
                         }
                     }
 
@@ -898,9 +923,10 @@ table {
                         line-height: @packageListHeight*0.9;
                         padding: 0 6px;
                         cursor: pointer;
+                        .mp_textNoWrap;
 
                         &:hover {
-                            background-color: darken(@baseWhite,2.5%);
+                            background-color: darken(@baseWhite,5%);
                         }
                     }
                 }
@@ -929,25 +955,26 @@ table {
             }
 
             .source {
-                width: @rightWidth+(-10px);
+                .mp_input(@rightWidth,30px);
             }
         }
     }
 
-    .reset-password-dialog{
-        @height:30px;
-        span{
-            line-height:@height;
-            font-size:15px;
+    .reset-password-dialog {
+        @height: 30px;
+
+        span {
+            line-height: @height;
+            font-size: 15px;
         }
 
-        input{           
+        input {
             .mp_input(200px,@height);
-            margin-left:10px;
+            margin-left: 10px;
         }
     }
 
-    .signup-success-dialog,.reset-password-success-dialog {
+    .signup-success-dialog, .reset-password-success-dialog {
         font-size: 14px;
 
         .email {
@@ -1114,20 +1141,20 @@ table {
     }
 
     .follow {
-        &:after{
-            content:"关注";
+        &:after {
+            content: "关注";
         }
     }
 
-    .unfollow{
-        &:after{
-            content:"已关注";
+    .unfollow {
+        &:after {
+            content: "已关注";
         }
     }
 
-    .edit{
-        &:after{
-            content:"编辑";
+    .edit {
+        &:after {
+            content: "编辑";
         }
     }
 }
@@ -1345,12 +1372,12 @@ table {
         /*height: @infoHeight;*/
         clear: both;
 
-        .source{
-            font-size:13px;
-            color:@baseBlue;
+        .source {
+            font-size: 13px;
+            color: @baseBlue;
 
-            &:hover{
-                text-decoration:underline;
+            &:hover {
+                text-decoration: underline;
             }
         }
 
@@ -1373,13 +1400,30 @@ table {
                 line-height: @infoHeight/2;
             }
 
+            span {
+                display: inline-block;
+                overflow: hidden;
+            }
+
+
             a {
                 color: @baseBlue;
-                display: inline-block;
                 margin: 0 4px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                display: inline-block;
 
                 &:hover {
                     text-decoration: underline;
+                }
+
+                &.user-name {
+                    max-width: 80px;
+                }
+
+                &.package-title {
+                    max-width: 160px;
                 }
             }
         }
@@ -1502,37 +1546,76 @@ table {
     }
 }
 
-.page-search{
-    .bar{
-        text-align:center;
-        display :table;
+.page-search {
+    .bar {
+        text-align: center;
+        display: table;
 
-        .item{
-            cursor:pointer;
-            display :table-cell;
-            border-width:1px 1px 1px 0;
-            border-color:#aaa;
-            border-style:solid;
-            width:70px;
-            padding:2px 6px;
-            font-size:14px;
-            @color:darken(@baseWhite,6%);
-            background-image:linear-gradient(@color,darken(@color,4%));
+        .item {
+            cursor: pointer;
+            display: table-cell;
+            border-width: 1px 1px 1px 0;
+            border-color: #aaa;
+            border-style: solid;
+            width: 70px;
+            padding: 2px 6px;
+            font-size: 14px;
+            @color: darken(@baseWhite,6%);
+            background-image: linear-gradient(@color,darken(@color,4%));
 
-            &:first-child{
-                border-top-left-radius:3px;
-                border-bottom-left-radius:3px;
-                border-left-width:1px;
+            &:first-child {
+                border-top-left-radius: 3px;
+                border-bottom-left-radius: 3px;
+                border-left-width: 1px;
             }
 
-            &:last-child{
-                border-top-right-radius:3px;
-                border-bottom-right-radius:3px;
+            &:last-child {
+                border-top-right-radius: 3px;
+                border-bottom-right-radius: 3px;
             }
 
-            &.on,&:hover{
-                background-image:linear-gradient(@baseWhite,darken(@baseWhite,4%))
+            &.on, &:hover {
+                background-image: linear-gradient(@baseWhite,darken(@baseWhite,4%));
             }
         }
+    }
+}
+
+.widget-link {
+    @height: 20px;
+    @border: 1px solid darken(@baseWhite,20%);
+    background-color: darken(@baseWhite,1%);
+    border: @border;
+    border-radius: 3px;
+    display: inline-block;
+    font-size: 12px;
+    height: @height;
+
+    &:hover {
+        background-color: @baseWhite;
+        box-shadow: 1px 1px 1px 0 #bbb;
+    }
+
+    .icon {
+        background: center center no-repeat;
+        border-right: @border;
+        float: left;
+        height: @height;
+        width: @height;
+
+        &.link {
+            background-image: url(/img/link_16_16.png);
+        }
+
+        &.magnet {
+            background-image: url(/img/magnet_16_16.png);
+        }
+    }
+
+    .text {
+        line-height: @height;
+        margin-left: @height;
+        color: @baseBlue;
+        padding: 0 3px;
     }
 }

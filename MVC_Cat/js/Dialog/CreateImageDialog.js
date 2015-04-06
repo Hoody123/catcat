@@ -47,7 +47,7 @@ MPCreateImageDialog =//创建图片
             {
                 strVar += "                     <div class=\"seperator\"></div>";
                 strVar += "                     <h3>来自</h3>";
-                strVar += "                     <input class=\"source\"  type=\"text\" value=\"{}\">".Format(source);
+                strVar += "                     <input class=\"source\"  type=\"text\" value=\"{0}\">".Format(source);
             }
             strVar += "                <\/div>";
             strVar += "            <\/div>";

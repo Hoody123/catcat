@@ -72,7 +72,12 @@ static public class OssFile
 
     public static void Delete(string path)
     {
-        _ossClient.DeleteObject(_ossPublicBucketName, path);
+        _ossClient.DeleteObject(_ossPublicBucketName, path);        
+    }
+
+    public static void Delete(IList<string> list)
+    {
+        _ossClient.DeleteObjects(new DeleteObjectsRequest(_ossPublicBucketName, list));
     }
 
     public static void Move(string source, string destination)
