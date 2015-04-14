@@ -16,10 +16,6 @@ MPObject.User.BigAvt = function (user) {
         return imageHost + "/avt/" + user.id + "_big";
 }
 
-MPObject.User.Home = function (user) {
-    return "/user/" + user.id;
-}
-
 MPObject.User.ID = function (user) {
     return user.id;
 }
@@ -28,8 +24,11 @@ MPObject.User.Name = function (user) {
     return user.name;
 }
 
+//用户操作
+MPObject.User.Actions = {};
+
 //关注用户
-MPObject.User.Follow = function (userid,callback) {
+MPObject.User.Actions.Follow = function (userid,callback) {
     if (!MPCheckLogin()) {
         return;
     }
@@ -43,7 +42,7 @@ MPObject.User.Follow = function (userid,callback) {
 }
 
 //取消关注用户
-MPObject.User.UnFollow = function (userid, callback) {
+MPObject.User.Actions.UnFollow = function (userid, callback) {
     if (!MPCheckLogin()) {
         return;
     }
@@ -56,12 +55,49 @@ MPObject.User.UnFollow = function (userid, callback) {
     }, "json");
 }
 
-//用户所关注的人
-MPObject.User.Following = function (user) {
-    return "/user/" + user.id + "/following"
+//用户页面
+MPObject.User.Pages={};
+
+//用户所关注的人的页面
+MPObject.User.Pages.Following = function (user) {
+    return "/user/" + user.id + "/following";
 }
 
-//用户的粉丝
-MPObject.User.Follower = function (user) {
-    return "/user/" + user.id + "/follower"
+//关注的图包的页面
+MPObject.User.Pages.FollowingPackage = function (user)
+{
+    return "/user/" + user.id + "/following/package";
+}
+//用户的粉丝的页面
+MPObject.User.Pages.Follower = function (user) {
+    return "/user/" + user.id + "/follower";
+}
+
+//用户图片的页面
+MPObject.User.Pages.Image = function (user)
+{
+    return "/user/" + user.id + "/image";
+}
+
+//用户图包的页面
+MPObject.User.Pages.Package = function (user)
+{
+    return "/user/" + user.id;
+}
+
+//用户个人主页
+MPObject.User.Pages.Home = function (user)
+{
+    return "/user/" + user.id;
+}
+
+//用户赞的首页面
+MPObject.User.Pages.Praise=function(user)
+{
+    return "/user/" + user.id + "/praise";
+}
+//用户赞的图包
+MPObject.User.Pages.PraisePackage=function(user)
+{
+    return "/user/" + user.id + "/praise/package";
 }

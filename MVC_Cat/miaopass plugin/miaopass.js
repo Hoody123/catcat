@@ -1,7 +1,7 @@
 ﻿//在这里开始写就可以了,chrome插件其实也就是一个js程序
 
 //服务器地址
-var host = "http://localhost:6186/";
+var host = "http://www.miaopass.net/";
 //准备收集的图片的url
 var source = "";
 //当前页面的url
@@ -27,6 +27,7 @@ function img_mouseenter() {
     if (t.height() >= 250 && t.width() >= 250) {
         button.show();
         source = t.attr("src");
+        description=document.title;
         button.offset({ top: t.offset().top, left: t.offset().left });
         button.on("mouseleave", function () {
             var point={};
@@ -57,13 +58,12 @@ function img_mouseleave() {
 function button_click() {
     //鼠标点击
     var url = host + "pick?from=" + encodeURIComponent(from) + "&source=" + encodeURIComponent(source) + "&description=" + encodeURIComponent(description);
-    window.open(url, "_blank", "toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, copyhistory=yes, width=400, height=400");
+    window.open(url, "_blank", "toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, copyhistory=yes, width=700, height=400");
 }
 
 function checkLive(node) {
-   
     setTimeout(TimerId = function myfunction() {
-        if (node.offset().left==0) {
+        if (node.is(":hidden")) {
             button.hide();
         }
         else {

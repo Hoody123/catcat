@@ -1,4 +1,5 @@
-﻿/// <reference path="Dialog.TitleDialog.js" />
+﻿/// <reference path="../include.js" />
+
 MPMessageBox = {
     Icons: {
         Error: "error",

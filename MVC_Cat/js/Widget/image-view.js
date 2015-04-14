@@ -6,6 +6,7 @@ MPWidget.ImageView.New = function (imageDetail)
     var res = $(MPTemplate.Widget.ImageView(imageDetail));
     res.Run = function ()
     {
+        //缩略图瀑布流处理
         var wf = MPWaterFall.New(res.find(".images"), res.find(".image-waterfall"), 3, 76, 1, 1, 1, 1,false);
         var max = 0;
         wf.onBottom = function ()
@@ -18,9 +19,30 @@ MPWidget.ImageView.New = function (imageDetail)
             })
         };
         wf.onBottom();
-
+        //广告处理
         var ad = res.find(".ad-piece.piece");
         ad.append(MPPage.ad);
+        //更多来自同一个网站的图片处理
+        if(imageDetail.host!="")
+        {
+            $.getJSON("/from/" + imageDetail.host, { ajax: true, limit: 3 })
+            .success(function (data)
+            {
+                var n = data.length;
+                if(n!=0)
+                {
+                    res.find(".from-piece").show();
+                    res.find(".from-piece .host").text(imageDetail.host);
+                    var thumbs = res.find(".from-piece .thumbs");
+                    thumbs.empty();
+                    for (var i = 0; i < n; i++)
+                    {
+                        var thumb = "<img src=\"{0}\" class=\"thumb\"/>".Format(MPObject.Image.sq236(data[i]).url);
+                        thumbs.append(thumb);
+                    }
+                }
+            });
+        }
     }
 
     var ImageItem = {};

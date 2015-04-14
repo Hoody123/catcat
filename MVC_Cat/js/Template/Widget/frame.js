@@ -38,7 +38,7 @@ MPTemplate.Widget.Frame = function ()
         strVar1 += "        <a class=\"item\" href=\"{2}\">我的关注<\/a>";
         strVar1 += "        <a class=\"item\" href=\"{3}\">我的粉丝<\/a>";
         strVar1 += "        <div class=\"seperator\"><\/div>";
-        strVar1 += "        <a class=\"item\">设置<\/a>";
+        strVar1 += "        <a class=\"item\" href=\"/setting\">设置<\/a>";
         strVar1 += "        <div class=\"item\" id=\"logout\">退出<\/div>";
         strVar1 += "    <\/div>";
         strVar1 += "<\/div>";

@@ -72,6 +72,8 @@ public class MPFile
                 //上传原始的(如果格式非jpg,则转换成jpg,如果图片大于800w像素,则压缩小于800w像素)图片
                 int threshold = 8000000;
                 int pixels = bitmap.Width * bitmap.Height;
+                int width = bitmap.Width;
+                int height = bitmap.Height;
 
                 if (pixels > threshold)
                 {
@@ -79,6 +81,8 @@ public class MPFile
                     using (var t = bitmap.FixWidth(w))
                     {
                         OssFile.Create(md5, t.SaveAsJpeg());
+                        width = t.Width;
+                        height = t.Height;
                     }
                 }
                 else
@@ -116,7 +120,7 @@ public class MPFile
                 {
                     OssFile.Create(md5 + "_fw78", t.SaveAsJpeg());
                 }
-                return DB.SInsert("insert into file (width,height,md5) values (?,?,?)", bitmap.Width, bitmap.Height, md5);
+                return DB.SInsert("insert into file (width,height,md5) values (?,?,?)", width, height, md5);
             }
         }
         catch (BadImageFormatException)

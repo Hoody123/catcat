@@ -161,10 +161,21 @@ public static class Tools
         Image desc = new Bitmap(size, size);
         using (Graphics g = Graphics.FromImage(desc))
         {
-            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.High;
             g.DrawImage(img, new Rectangle(0, 0, size, size), new Rectangle(left, top, s, s), GraphicsUnit.Pixel);
         }
         return desc;
+    }
+
+   public static Image Crop(this Image img,int x,int y,int width,int height,int targetWidth,int targetHeight)
+    {
+        Image desc = new Bitmap(targetWidth, targetHeight);
+       using(var g=Graphics.FromImage(desc))
+       {
+           g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.High;
+           g.DrawImage(img, new Rectangle(x, y, width, height), new Rectangle(0, 0, desc.Width, desc.Height), GraphicsUnit.Pixel);
+       }
+       return desc;
     }
 
     /// <summary>

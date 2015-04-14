@@ -2,7 +2,7 @@
 /// <reference path="../jquery.js" />
 /// <reference path="MessageBox.js" />
 /// <reference path="Dialog.js" />
-MPCreateImageDialog =//创建图片
+MPCreateImageDialog =
     {
         New: function (imageSrc, title, description,isEdit,source) {
             var strVar = "";

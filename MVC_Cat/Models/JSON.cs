@@ -160,18 +160,17 @@ namespace JSON
             imageCount = Convert.ToInt32(DB.SExecuteScalar("select count(*) from image where packageid=?", package.ID));
             followerCount = Convert.ToInt32(DB.SExecuteScalar("select count(*) from following where type=? and info=?", MPFollowingTypes.Package, package.ID));
             user = new JSON.User(new MPUser(package.UserID));
+            praised = false;
+            followed = false;
             if (currentUser != null && currentUser.ID != user.id)
             {
-                praised = false;
-                followed = false;
-
                 if (DB.SExecuteScalar("select userid from praise where userid=? and type=? and info=?", currentUser.ID, MPPraiseTypes.Package, package.ID) != null)
                 {
                     praised = true;
                 }
                 if (DB.SExecuteScalar("select userid from following where userid=? and type=? and info=?", currentUser.ID, MPFollowingTypes.Package, package.ID) != null)
                 {
-                    praised = true;
+                    followed = true;
                 }
             }
         }
@@ -194,7 +193,7 @@ namespace JSON
         {
             id = image.ID;
             source = image.Url;
-            host = image.Url == "" ? "" : new Uri(image.Url).Host;
+            host = image.Host;
             package = new JSON.Package(new MPPackage(image.PackageID));
             file = new JSON.File(new MPFile(image.FileID));
             user = new JSON.User(new MPUser(image.UserID));

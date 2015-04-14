@@ -1,5 +1,5 @@
 ﻿/// <reference path="../../include.js" />
-MPTemplate.Widget.ImageView = function (data,options)
+MPTemplate.Widget.ImageView = function (data, options)
 {
     var fuser = MPFormat.User.New(data.user);
     var strVar = "";
@@ -13,14 +13,24 @@ MPTemplate.Widget.ImageView = function (data,options)
         strVar += "                <div class=\"edit btn\" data-id=\"{0}\" data-hash=\"{1}\" data-descripition=\"{2}\" data-source=\"{3}\" data-packageid=\"{4}\">编辑<\/div>".Format(data.id, data.file.hash, data.description, data.source, data.package.id);
         strVar += "                <div class=\"delete btn\" data-id=\"{0}\" data-hash=\"{1}\">删除<\/div>".Format(data.id, data.file.hash);
     }
+    else
+    {
+        strVar += "<div class=\"{0} btn\"><em></em></div>".Format(data.praised == true ? "image-unpraise" : "image-praise");
+    }
     strVar += "            <\/div>";
     strVar += "            <div class=\"image\">";
-    strVar += "                <img src=\"{0}\" alt=\"{1}\" />".Format(imageHost + "/" + data.file.hash + "_fw658",data.description.substring(0,20).replace('"',''));
+    strVar += "                <img src=\"{0}\" alt=\"{1}\" />".Format(imageHost + "/" + data.file.hash + "_fw658", data.description.substring(0, 20).replace('"', ''));
     strVar += "            <\/div>";
-    strVar += "            <div class=\"tool-bar-bottom\">";
-    strVar += "                <div class=\"clear\"><\/div>";
-    strVar += "            <\/div>";
+    if (data.host != "")
+    {
+        strVar += "            <div class=\"bar-bottom\">";
+        strVar += "                <div class=\"source\"><span>来自</span><a href=\"{0}\">{1}</a></div>".Format(data.source, data.host);
+        strVar += "                <div class=\"clear\"><\/div>";
+        strVar += "            <\/div>";
+    }
+
     strVar += "        <\/div>";
+
     strVar += "          <div class=\"info-piece piece\">";
     strVar += "                <div class=\"info\">";
     strVar += "                    <a class=\"avt\" href=\"{0}\">".Format(fuser.Home());
@@ -43,16 +53,19 @@ MPTemplate.Widget.ImageView = function (data,options)
     {
         strVar += MPTemplate.Widget.Comment(data.comments[i]);
     }
-    strVar += "                <div class=\"add-comment\">";
-    strVar += "                    <a class=\"avt\" href=\"{0}\">".Format(fuser.Home());
-    strVar += "                        <img src=\"{0}\" />".Format(fuser.Avt());
-    strVar += "                    <\/a>";
-    strVar += "                    <div class=\"new-comment\">";
-    strVar += "                        <textarea placeholder=\"请在这里输入评论内容\" ><\/textarea>";
-    strVar += "                    <\/div>";
-    strVar += "                    <div class=\"submit\">添加评论<\/div>";
-    strVar += "                <\/div>";
-    strVar += "                <div class=\"clear\"><\/div>";
+    if (MPCheckLogin(false) == true)
+    {
+        strVar += "                <div class=\"add-comment\">";
+        strVar += "                    <a class=\"avt\" href=\"{0}\">".Format(fuser.Home());
+        strVar += "                        <img src=\"{0}\" />".Format(fuser.Avt());
+        strVar += "                    <\/a>";
+        strVar += "                    <div class=\"new-comment\">";
+        strVar += "                        <textarea placeholder=\"请在这里输入评论内容\" ><\/textarea>";
+        strVar += "                    <\/div>";
+        strVar += "                    <div class=\"submit\">添加评论<\/div>";
+        strVar += "                <\/div>";
+        strVar += "                <div class=\"clear\"><\/div>";
+    }
     strVar += "            <\/div>";
     strVar += "        <\/div>";
     strVar += "    <\/div>";
@@ -70,6 +83,15 @@ MPTemplate.Widget.ImageView = function (data,options)
     strVar += "        <\/div>";
     strVar += "        <div class=\"ad-piece piece\">";
     strVar += "        <\/div>";
+    strVar += "         <div class=\"from-piece piece\">"
+    strVar += "             <a href=\"/from/{0}\">";
+    strVar += "                     <div class=\"text\">更多来自</div>";
+    strVar += "                     <div class=\"host\"></div>";
+    strVar += "                     <div class=\"thumbs\">";
+    strVar += "                     </div>";
+    strVar += "                     <div class=\"clear\"></div>";
+    strVar += "             </a>";
+    strVar += "         </div>";
     strVar += "    <\/div>";
     strVar += "    <div class=\"bottom\"><\/div>";
     strVar += "<\/div>";

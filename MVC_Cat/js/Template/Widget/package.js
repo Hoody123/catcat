@@ -1,8 +1,8 @@
 ﻿/// <reference path="../../include.js" />
 
-MPTemplate.Widget.Package=function(data,options)
+MPTemplate.Widget.Package = function (data, options)
 {
-    options= options ? options : MPTemplate.Widget.Package.Options.BigButton;
+    options = options ? options : MPTemplate.Widget.Package.Options.BigButton;
     var strVar = "";
     strVar += "<div class=\"widget-package\">";
     strVar += "    <a class=\"previews\" href=\"{0}\">".Format(host + "/package/" + data.id);
@@ -39,34 +39,34 @@ MPTemplate.Widget.Package=function(data,options)
     strVar += "    <div class=\"actions\">";
     if (data.user.id == MPData.user.id)
     {
-        strVar += "<div class=\"btn2 edit\" data-id=\"{0}\"><\/div>".Format(fuser.ID());
+        strVar += "<div class=\"btn2 edit\" data-id=\"{0}\"><\/div>".Format(data.id);
     }
     else
     {
         switch (options)
-        {           
+        {
             case MPTemplate.Widget.Package.Options.SmallButton:
                 strVar += "        <a class=\"avt\" href=\"{0}\">".Format(fuser.Home());
                 strVar += "            <img src=\"{0}\" />".Format(fuser.Avt());
                 strVar += "        <\/a>";
                 strVar += "        <a class=\"username\" href=\"{0}\" >{1}<\/a>".Format(fuser.Home(), fuser.Name);
-                if (data.user.followed === true)
+                if (data.followed === true)
                 {
-                    strVar += "        <div class=\"btn unfollow\" data-id=\"{0}\"><\/div>".Format(fuser.ID());
+                    strVar += "        <div class=\"btn unfollow\" data-id=\"{0}\"><\/div>".Format(data.id);
                 }
                 else
                 {
-                    strVar += "        <div class=\"btn follow\" data-id=\"{0}\"><\/div>".Format(fuser.ID());
+                    strVar += "        <div class=\"btn follow\" data-id=\"{0}\"><\/div>".Format(data.id);
                 }
                 break;
             case MPTemplate.Widget.Package.Options.BigButton:
-                if (data.user.followed == true)
+                if (data.followed == true)
                 {
-                    strVar += "        <div class=\"btn2 unfollow\" data-id=\"{0}\"><\/div>".Format(fuser.ID());
+                    strVar += "        <div class=\"btn2 unfollow\" data-id=\"{0}\"><\/div>".Format(data.id);
                 }
                 else
                 {
-                    strVar += "        <div class=\"btn2 follow\" data-id=\"{0}\"><\/div>".Format(fuser.ID());
+                    strVar += "        <div class=\"btn2 follow\" data-id=\"{0}\"><\/div>".Format(data.id);
                 }
                 break;
         }
@@ -80,3 +80,33 @@ MPTemplate.Widget.Package.Options = {
     SmallButton: 0,
     BigButton: 1
 };
+
+MPTemplate.Widget.Package.Buttons = {};
+
+MPTemplate.Widget.Package.Buttons.Edit = function (data, options)
+{
+    if (options == null)
+        options = {};
+    var str = "<div class=\"package-edit {0}\" data-id=\"{1}\" data-title=\"{2}\" data-description=\"{4}\">编辑</div>".Format(options.class, data.id, data.title, data.description);
+    return str;
+}
+
+MPTemplate.Widget.Package.Buttons.Follow = function (data, options)
+{
+    if (options == null)
+        options = {};
+    var cls = data.followed == true ? "package-unfollow" : "package-follow";
+    var title = data.followed == true ? "取消关注" : "关注";
+    var str = "<div class=\"{0} {1}\" data-id=\"{2}\" title=\"{3}\"></div>".Format(cls, options.class, data.id, title);
+    return str;
+}
+
+MPTemplate.Widget.Package.Buttons.Praise = function (data, options)
+{
+    if (options == null)
+        options = {};
+    var cls = data.praised == true ? "package-unpraise" : "package-praise";
+    var title = data.praised == true ? "取消赞" : "赞";
+    var str = "<div class=\"{0} {1}\" data-id=\"{2}\" title=\"{3}\"></div>".Format(cls, options.class, data.id, title);
+    return str;
+}

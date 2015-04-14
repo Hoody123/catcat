@@ -3,13 +3,15 @@
 /// <reference path="carhartl-jquery-cookie-92b7715/jquery.cookie.js" />
 /// <reference path="config.js" />
 
-String.prototype.Format = function (arg1, arg2) {
+String.prototype.Format = function (arg1, arg2)
+{
     var args;
     if (arguments[0] instanceof Array)
         args = arguments[0];
     else
         args = arguments;
-    return this.replace(/(\{\d+\})/g, function (word) {
+    return this.replace(/(\{\d+\})/g, function (word)
+    {
         var index = parseInt(word.substring(1, word.length - 1));
         var obj = "";
         if (args[index] != undefined || args[index] != null)
@@ -17,14 +19,15 @@ String.prototype.Format = function (arg1, arg2) {
         return MPHtmlEncode(obj.toString());
     });
 }
-String.prototype.FormatNoEncode = function (arg1, arg2) {
-
+String.prototype.FormatNoEncode = function (arg1, arg2)
+{
     var args;
     if (arguments[0] instanceof Array)
         args = arguments[0];
     else
         args = arguments;
-    return this.replace(/(\{\d+\})/g, function (word) {
+    return this.replace(/(\{\d+\})/g, function (word)
+    {
         var index = parseInt(word.substring(1, word.length - 1));
         var obj = "";
         if (args[index] != undefined || args[index] != null)
@@ -38,11 +41,13 @@ MPTemplate = {};
 MPWidget = {};
 MPFormat = {};
 MPObject = {};
-
+host = "";
+imageHost = "";
 
 var MPWaterFall = {
     Item: {
-        New: function (element) {
+        New: function (element)
+        {
             var item = {};
             item.Element = $(element);
             var _x;
@@ -50,10 +55,12 @@ var MPWaterFall = {
             var _height = item.Element.outerHeight();
             var _wid;
 
-            item.Height = function () {
+            item.Height = function ()
+            {
                 return _height;
             }
-            item.X = function () {
+            item.X = function ()
+            {
                 if (arguments.length == 0)
                     return _x;
                 var value = arguments[0];
@@ -63,7 +70,8 @@ var MPWaterFall = {
                 item.Element.css("left", value + "px");
                 _x = value;
             }
-            item.Y = function () {
+            item.Y = function ()
+            {
                 if (arguments.length == 0)
                     return _y;
 
@@ -74,7 +82,8 @@ var MPWaterFall = {
                 item.Element.css("top", value + "px");
                 _y = value;
             }
-            item.WID = function () {
+            item.WID = function ()
+            {
                 if (arguments.length == 0)
                     return _wid;
 
@@ -88,14 +97,16 @@ var MPWaterFall = {
             return item;
         }
     },
-    New: function (frame, container, columnCount, itemWidth, marginLeft, marginTop, marginRight, marginBottom) {
+    New: function (frame, container, columnCount, itemWidth, marginLeft, marginTop, marginRight, marginBottom)
+    {
 
         var waterFall = {};
 
         //列数 
         var _columnCount = 1;
         //设置列数,若参数为0,则返回当前列数,否则设定列数
-        waterFall.ColumnCount = function () {
+        waterFall.ColumnCount = function ()
+        {
             if (arguments.length == 0)
                 return _columnCount;
 
@@ -104,7 +115,8 @@ var MPWaterFall = {
                 return;
 
             _columnHeights = [];
-            for (var i = 0; i < value; i++) {
+            for (var i = 0; i < value; i++)
+            {
                 _columnHeights[i] = 0;
             }
             _columnCount = value;
@@ -126,20 +138,24 @@ var MPWaterFall = {
         //指示瀑布流是否全部内容显示完毕
         var _isComplete = false;
         //布局瀑布流        
-        function Layout() {
+        function Layout()
+        {
             _containerHeight = 0;
-            for (var i = 0; i < _columnCount; i++) {
+            for (var i = 0; i < _columnCount; i++)
+            {
                 _columnHeights[i] = 0;
             }
 
             var n = _list.length;
-            for (var i = 0; i < n; i++) {
+            for (var i = 0; i < n; i++)
+            {
                 var item = _list[i];
                 Arrange(item);
             }
         }
         //在瀑布尾放置元素
-        function Arrange(item) {
+        function Arrange(item)
+        {
             var targetColumn = Min(_columnHeights);
             item.X((itemWidth + marginLeft + marginRight) * targetColumn.index + marginLeft);
             item.Y(targetColumn.value + marginTop);
@@ -151,7 +167,8 @@ var MPWaterFall = {
             _minColumnHeight = Min(_columnHeights).value;
         }
 
-        frame.scroll(function () {
+        frame.scroll(function ()
+        {
             if (_isUpdating == true)
                 return;
 
@@ -166,21 +183,26 @@ var MPWaterFall = {
 
             var top = containerTop - frameTop + (isWindow ? 0 : scrollTop);
             var a = scrollTop + top + height;
-            if (a > _minColumnHeight) {
-                if (waterFall.onBottom != null) {
+            if (a > _minColumnHeight)
+            {
+                if (waterFall.onBottom != null)
+                {
                     waterFall.onBottom();
                 }
             }
         })
 
-        function Max(arr) {
+        function Max(arr)
+        {
             if ((arr instanceof Array) == false)
                 throw TypeError("函数只接受数组参数");
             var n = arr.length;
             var max = arr[0];
             var index = 0;
-            for (var i = 1; i < n; i++) {
-                if (arr[i] > max) {
+            for (var i = 1; i < n; i++)
+            {
+                if (arr[i] > max)
+                {
                     max = arr[i];
                     index = i;
                 }
@@ -189,14 +211,17 @@ var MPWaterFall = {
             return { index: index, value: max };
         }
 
-        function Min(arr) {
+        function Min(arr)
+        {
             if ((arr instanceof Array) == false)
                 throw TypeError("函数只接受数组参数");
             var n = arr.length;
             var min = arr[0];
             var index = 0;
-            for (var i = 1; i < n; i++) {
-                if (arr[i] < min) {
+            for (var i = 1; i < n; i++)
+            {
+                if (arr[i] < min)
+                {
                     min = arr[i];
                     index = i;
                 }
@@ -204,20 +229,24 @@ var MPWaterFall = {
             return { index: index, value: min };
         }
 
-        function Add(item) {
+        function Add(item)
+        {
             container.append(item);
             var a = MPWaterFall.Item.New(item);
             a.WID(_wid++);
             return a;
         }
 
-        waterFall.Push = function (dataList, type, typeDetail, returnField) {
+        waterFall.Push = function (dataList, type, typeDetail, returnField)
+        {
             var n = dataList.length;
-            if (n == 0) {
+            if (n == 0)
+            {
                 waterFall.Complete();
                 return 0;
             }
-            for (var i = 0; i < n; i++) {
+            for (var i = 0; i < n; i++)
+            {
                 var item1 = Add(type.New(dataList[i], typeDetail));
                 Arrange(item1);
                 _list.push(item1);
@@ -225,15 +254,19 @@ var MPWaterFall = {
             return dataList[n - 1][returnField];
         }
 
-        waterFall.Insert = function (startIndex, newItems) {
+        waterFall.Insert = function (startIndex, newItems)
+        {
             var list = [];
-            if (newItems instanceof Array) {
+            if (newItems instanceof Array)
+            {
                 var n = newItems.length;
-                for (var i = 0; i < n; i++) {
+                for (var i = 0; i < n; i++)
+                {
                     list.push(Add(newItems[i]));
                 }
             }
-            else {
+            else
+            {
                 list.push(Add(newItems));
             }
             var p1 = _list.slice(0, startIndex);
@@ -243,11 +276,14 @@ var MPWaterFall = {
             Layout();
         }
 
-        waterFall.Delete = function (wid) {
+        waterFall.Delete = function (wid)
+        {
             var n = _list.length;
-            for (var i = 0; i < n; i++) {
+            for (var i = 0; i < n; i++)
+            {
                 var item = _list[i];
-                if (item.WID() == wid) {
+                if (item.WID() == wid)
+                {
                     _list.splice(i, 1);
                     item.Element.remove();
                     break;
@@ -255,50 +291,60 @@ var MPWaterFall = {
             }
         }
 
-        waterFall.Clear = function () {
+        waterFall.Clear = function ()
+        {
             container.empty();
             _list = [];
         }
 
         waterFall.ColumnCount(columnCount);
 
-        waterFall.BeginUpdate = function () {
+        waterFall.BeginUpdate = function ()
+        {
             _isUpdating = true;
         }
 
-        waterFall.EndUpdate = function () {
+        waterFall.EndUpdate = function ()
+        {
             _isUpdating = false;
         }
 
-        waterFall.Complete = function () {
+        waterFall.Complete = function ()
+        {
             _isComplete = true;
         }
 
         waterFall.onBottom = null;
 
-        waterFall.Resize = function () {
+        waterFall.Resize = function ()
+        {
             var c = countColumn();
             $(".wrapper").css("width", c * (itemWidth + marginLeft + marginRight));
             waterFall.ColumnCount(c);
-            $(window).on("resize", function () {
+            $(window).on("resize", function ()
+            {
                 var c = countColumn();
                 $(".wrapper").css("width", c * (itemWidth + marginLeft + marginRight));
                 waterFall.ColumnCount(c);
             })
         }
 
-        function countColumn() {
+        function countColumn()
+        {
             var w = itemWidth + marginLeft + marginRight;
             var wwidth = $(window).width();
             var count = 1;
-            while (w * (count + 1) <= wwidth) {
+            while (w * (count + 1) <= wwidth)
+            {
                 count++;
             }
 
-            if (count < 4) {
+            if (count < 4)
+            {
                 return 4;
             }
-            else if (count > 6) {
+            else if (count > 6)
+            {
                 return 6;
             }
             else
@@ -310,19 +356,30 @@ var MPWaterFall = {
 }
 
 //检查登录
-function MPCheckLogin() {
-    if (MPData.user.id == 0) {
-        MPLoginDialog.New();
+function MPCheckLogin(showDialog)
+{
+    showDialog = (showDialog == null ? true : showDialog);
+    if (MPData.user.id == 0)
+    {
+        if (showDialog === true)
+        {
+            var dialog = MPLoginDialog.New();
+            dialog.onSuccess = function () {
+                location.reload();
+            }
+        }
         return false;
     }
-    else {
+    else
+    {
         return true;
     }
 }
 
 
 //窗口居中
-function MPCenter(content, parent) {
+function MPCenter(content, parent)
+{
     var cheight = content.height();
     var cwidth = content.width();
 
@@ -330,35 +387,44 @@ function MPCenter(content, parent) {
     content.css("margin-top", -Math.floor(cheight / 2));
 }
 
-function MPCheckEmail(e) {
-    if (e == "") {
+function MPCheckEmail(e)
+{
+    if (e == "")
+    {
         MPMessageBox.New(MPMessageBox.Icons.Warn, "邮箱不能为空!");
         return false;
     }
-    if (!e.match(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/)) {
+    if (!e.match(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/))
+    {
         MPMessageBox.New(MPMessageBox.Icons.Warn, "邮箱格式不正确,请重新输入!");
         return false;
     }
     return true;
 }
 
-function MPCheckPassword(e) {
-    if (e == "") {
+function MPCheckPassword(e)
+{
+    if (e == "")
+    {
         MPMessageBox.New("alert", "提示", "请输入密码");
         return false;
     }
     return true;
 }
 
-function MPHtmlEncode(e) {
+function MPHtmlEncode(e)
+{
     var d = $("<div></div>");
     d.text(e);
     return d.html();
 }
 
-function MPLogOut() {
-    $.post(host + "/ajax.aspx?act=logout", {}, function (data) {
-        if (data.code == 0) {
+function MPLogOut()
+{
+    $.post(host + "/ajax.aspx?act=logout", {}, function (data)
+    {
+        if (data.code == 0)
+        {
             $.removeCookie("login");
             alert("logout success");
         }
@@ -373,37 +439,48 @@ function MPMenu(parent, menu, staytime, delaytime)//parent为点击目标 menu�
     var _timerIdHide;
     var _parent = $(parent);
     var _menu = $(menu);
-    _parent.mouseenter(function (e) {
+    _parent.mouseenter(function (e)
+    {
         clearTimeout(_timerIdHide);
-        _timerIdDisplay = setTimeout(function () {
+        _timerIdDisplay = setTimeout(function ()
+        {
             _menu.show();
         }, _delayTime);
 
     })
-    _parent.mouseleave(function () {
+    _parent.mouseleave(function ()
+    {
         clearTimeout(_timerIdDisplay);
-        _timerIdHide = setTimeout(function () {
+        _timerIdHide = setTimeout(function ()
+        {
             _menu.hide();
         }, _stayTime);
     })
 
-    _menu.mouseenter(function () {
+    _menu.mouseenter(function ()
+    {
         clearTimeout(_timerIdHide);
     })
 
-    if (!CheckChild(_menu, _parent)) {
-        _menu.mouseleave(function () {
-            _timerIdHide = setTimeout(function () {
+    if (!CheckChild(_menu, _parent))
+    {
+        _menu.mouseleave(function ()
+        {
+            _timerIdHide = setTimeout(function ()
+            {
                 _menu.hide();
             }, _stayTime);
         })
     }
     //检查菜单是否为点击目标的子元素
-    function CheckChild(obj, parentObj) {
+    function CheckChild(obj, parentObj)
+    {
         obj = obj.get(0);
         parentObj = parentObj.get(0);
-        while (obj != undefined && obj != null && obj.tagName.toUpperCase() != "BODY"){
-            if (obj == parentObj){
+        while (obj != undefined && obj != null && obj.tagName.toUpperCase() != "BODY")
+        {
+            if (obj == parentObj)
+            {
                 return true;
             }
             obj = obj.parentNode;
@@ -417,22 +494,27 @@ function MPPopUpMenu(parent, menu, callback)//parent为点击目标 menu为弹�
 {
     var _parent = $(parent);
     var _menu = $(menu);
-    _parent.click(function (e) {
+    _parent.click(function (e)
+    {
         e.stopPropagation();
         _menu.show();
         var clickfn;
-        $(window).on("click", clickfn = function (event) {
+        $(window).on("click", clickfn = function (event)
+        {
             var point = {};
             point.X = event.clientX;
             point.Y = event.clientY;
-            if (MPCheckInEle(_menu, point)) {
+            if (MPCheckInEle(_menu, point))
+            {
                 _menu.show();
             }
-            else {
+            else
+            {
                 _menu.hide();
                 $(window).off("click", clickfn);
             }
-            if (callback != undefined || callback != null) {
+            if (callback != undefined || callback != null)
+            {
                 callback();
             }
         })
@@ -440,7 +522,8 @@ function MPPopUpMenu(parent, menu, callback)//parent为点击目标 menu为弹�
 }
 
 //检查某点是否在某个元素内
-function MPCheckInEle(node, point) {
+function MPCheckInEle(node, point)
+{
     var w = $(window);
     var mouseX = point.X;
     var mouseY = point.Y;
@@ -448,16 +531,19 @@ function MPCheckInEle(node, point) {
     var top = node.offset().top;
     var width = node.width();
     var height = node.height();
-    if (mouseX > left - w.scrollLeft() && mouseX < left + width - w.scrollLeft() && mouseY > top - w.scrollTop() && mouseY < top + height - w.scrollTop()) {
+    if (mouseX > left - w.scrollLeft() && mouseX < left + width - w.scrollLeft() && mouseY > top - w.scrollTop() && mouseY < top + height - w.scrollTop())
+    {
         return true;
     }
-    else {
+    else
+    {
         return false;
     }
 }
 
 //获取地址栏的某个参数内容
-function MPGetQueryString(name) {
+function MPGetQueryString(name)
+{
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
     var r = window.location.search.substr(1).match(reg);
     if (r != null) return unescape(r[2]); return null;

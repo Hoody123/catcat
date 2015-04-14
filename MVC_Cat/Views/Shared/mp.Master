@@ -12,8 +12,9 @@
     <link rel="stylesheet" type="text/css" href="<%=ResolveUrl("~/css/main.css") %>" />
     <script type="text/javascript" src="http://libs.baidu.com/jquery/1.9.1/jquery.js"></script>
     <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery.cookie.js")%>"></script>
-    <script src="<%=ResolveClientUrl("~/js/config.js") %>"></script>
     <script src="<%=ResolveClientUrl("~/js/main.js") %>"></script>
+    <script src="<%=ResolveClientUrl("~/js/jquery.color.js") %>"></script>
+    <script src="<%=ResolveClientUrl("~/js/jquery.Jcrop.js") %>"></script>
 
     <script src="<%=ResolveClientUrl("~/js/Dialog/Dialog.js") %>"></script>
     <script src="<%=ResolveClientUrl("~/js/Dialog/TitleDialog.js") %>"></script>
@@ -26,6 +27,7 @@
     <script src="<%=ResolveClientUrl("~/js/Dialog/CreatePackageDialog.js") %>"></script>
     <script src="<%=ResolveClientUrl("~/js/Dialog/CreateImageDialog.js") %>"></script>
     <script src="<%=ResolveClientUrl("~/js/Dialog/UploadDialog.js") %>"></script>
+    <script src="<%=ResolveClientUrl("~/js/Dialog/AvtCutDialog.js") %>"></script>
 
     <script src="<%=ResolveClientUrl("~/js/Format/User.js") %>"></script>
 
@@ -37,12 +39,17 @@
 
     <script src="<%=ResolveClientUrl("~/js/template/template.js") %>"></script>
     <script src="<%=ResolveClientUrl("~/js/template/page/search.js") %>"></script>
+    <script src="<%=ResolveClientUrl("~/js/template/page/user.js") %>"></script>
+    <script src="<%=ResolveClientUrl("~/js/template/page/setting.js") %>"></script>
+    <script src="<%=ResolveClientUrl("~/js/template/page/package.js") %>"></script>
     <script src="<%=ResolveClientUrl("~/js/template/widget/package.js") %>"></script>
     <script src="<%=ResolveClientUrl("~/js/template/widget/image.js") %>"></script>
     <script src="<%=ResolveClientUrl("~/js/template/widget/comment.js") %>"></script>
     <script src="<%=ResolveClientUrl("~/js/template/widget/frame.js") %>"></script>
     <script src="<%=ResolveClientUrl("~/js/template/widget/image-view.js") %>"></script>
     <script src="<%=ResolveClientUrl("~/js/template/widget/link.js") %>"></script>
+    <script src="<%=ResolveClientUrl("~/js/template/widget/user.js") %>"></script>
+    <script src="<%=ResolveClientUrl("~/js/template/dialog/avt-cut-dialog.js") %>"></script>
 
     <script src="<%=ResolveClientUrl("~/js/Widget/Frame.js") %>"></script>
     <script src="<%=ResolveClientUrl("~/js/Widget/Search.js") %>"></script>
@@ -50,15 +57,14 @@
     <script src="<%=ResolveClientUrl("~/js/Widget/package.js") %>"></script>
     <script src="<%=ResolveClientUrl("~/js/Widget/image-view.js") %>"></script>
     <script src="<%=ResolveClientUrl("~/js/Widget/user-info.js") %>"></script>
-    <script src="<%=ResolveClientUrl("~/js/Widget/package-info.js") %>"></script>
     <script src="<%=ResolveClientUrl("~/js/Widget/User.js") %>"></script>
     <script src="<%=ResolveClientUrl("~/js/Widget/window.js") %>"></script>
 
     <script src="<%=ResolveClientUrl("~/js/initialize.js") %>"></script>
     <%--<script src="<%=ResolveClientUrl("~/js/miaopass.js") %>"></script>--%>
     <script type="text/javascript">
-        var host = "<%=Tools.GetSetting("Host") %>";
-        var imageHost = "<%=Tools.GetSetting("ImageHost")%>";
+        host =location.protocol+"//"+ location.host;
+        imageHost = "<%=Tools.GetSetting("ImageHost")%>";
         MPData=<%=Tools.JSONStringify(ViewBag.MPData)%>;
     </script>
 

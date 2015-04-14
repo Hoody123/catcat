@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <link href="../css/main.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="wrapper">
+        <div class="page-setting">
+            <ul class="left">
+                <li><a href="/">基本信息</a></li>
+                <li><a href="/password">更改密码</a></li>
+            </ul>
+            <div class="right">
+                <div class="content">
+                    <div class="line">
+                        <h2>基本信息</h2>
+                    </div>
+                    <div class="line">
+                        <h3>邮箱地址</h3>
+                        <div>
+                            <input type="text" readonly="readonly" value="{0}" />
+                        </div>
+                    </div>
+                    <div class="line">
+                        <h3>昵称</h3>
+                        <div>
+                            <input type="text" value="{0}" id="username" />
+                        </div>
+                    </div>
+                    <div class="line">
+                        <h3>自我介绍</h3>
+                        <div>
+                            <textarea id="desecription">{0}</textarea>
+                        </div>
+                    </div>
+                    <div class="line">
+                        <h3>头像</h3>
+                        <div>
+                            <img class="avt" src="{0}" />
+                            <div class="upload">上传头像</div>
+                            <div class="clear"></div>
+                        </div>
+                    </div>  
+                    <div class="actions">
+                        <div class="submit">确定</div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="content">
+                    <div class="line">
+                        <h2>修改密码</h2>
+                    </div>
+                    <div class="line">
+                        <h3>原密码</h3>
+                        <div>
+                            <input type="text" id="oldpassword" value="" />
+                        </div>
+                    </div>
+                    <div class="line">
+                        <h3>新密码</h3>
+                        <div>
+                            <input type="text" id="newpassword1" />
+                        </div>
+                    </div>
+                    <div class="line">
+                        <h3>确认新密码</h3>
+                        <div>
+                            <input type="text"  id="newpassword" />
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <div class="submit">确定</div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -2,3 +2,4 @@
 
 MPTemplate.Widget = {};
 MPTemplate.Page = {};
+MPTemplate.Dialog = {};

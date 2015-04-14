@@ -17,8 +17,21 @@ public class MPPackage
         }
         set
         {
-            SetAttribute("Title", value);
-            _title = value;
+            if (_title.Equals(value, StringComparison.OrdinalIgnoreCase))
+                return;
+
+            if (value == "")
+                throw new MiaopassException("图包名不能为空");
+
+            try
+            {
+                SetAttribute("Title", value);
+                _title = value;
+            }
+            catch (MySql.Data.MySqlClient.MySqlException)
+            {
+                throw new MiaopassPackageNameConflictException();
+            }
         }
     }
 
@@ -31,6 +44,8 @@ public class MPPackage
         }
         set
         {
+            if (_description.Equals(value, StringComparison.OrdinalIgnoreCase))
+                return;
             SetAttribute("Description", value);
             _description = value;
         }
@@ -75,7 +90,7 @@ public class MPPackage
             image.Delete();
         }
         //开始事务处理
-        using(var db=new DB())
+        using (var db = new DB())
         {
             db.BeginTransaction();
             //删除package表中的记录
@@ -92,7 +107,7 @@ public class MPPackage
     {
         try
         {
-          return  DB.SInsert("insert into package (userid,title,description,coverid) values (?,?,'',0)", userid, title);
+            return DB.SInsert("insert into package (userid,title,description,coverid) values (?,?,'',0)", userid, title);
         }
         catch (MySql.Data.MySqlClient.MySqlException)
         {

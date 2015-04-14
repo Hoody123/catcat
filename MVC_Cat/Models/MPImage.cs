@@ -11,6 +11,7 @@ public class MPImage
     public DateTime CreatedTime { get; set; }
     public int Via { get; set; }
     public string Url { get; set; }
+    public string Host { get; set; }
     public int UserID { get; set; }
 
     string _description = "";
@@ -38,7 +39,7 @@ public class MPImage
 
     void Initialize(string condition, params object[] objs)
     {
-        string sql = "select packageid,fileid,createdtime,via,url,description,id,userid from image where " + condition;
+        string sql = "select packageid,fileid,createdtime,via,url,description,id,userid,host from image where " + condition;
         var res = DB.SExecuteReader(sql, objs);
 
         if (res.Count == 0)
@@ -53,6 +54,7 @@ public class MPImage
         _description = (string)row[5];
         ID = Convert.ToInt32(row[6]);
         UserID = Convert.ToInt32(row[7]);
+        Host = (string)row[8];
     }
 
     public void Delete()
@@ -78,14 +80,26 @@ public class MPImage
         }
     }
 
+    static string GetHost(string url)
+    {
+        var host = "";
+        try
+        {
+            var uri = new Uri(url);
+            host = uri.Host;
+        }
+        catch { }
+        return host;
+    }
+
     public void Edit(int packageid,string description,string url)
     {
-        DB.SExecuteNonQuery("update image set packageid=?,description=?,url=? where id=?", packageid, description, url, ID);
+        DB.SExecuteNonQuery("update image set packageid=?,description=?,url=?,host=? where id=?", packageid, description, url, ID,GetHost(url));
     }
 
     public static int Create(int packageid, int fileid, int userid, int via, string url, string description)
     {
-       return  DB.SInsert("insert into image (packageid,fileid,userid,via,url,description,createdtime) values (?,?,?,?,?,?,?)", packageid, fileid, userid,via, url, description,DateTime.Now);
+       return  DB.SInsert("insert into image (packageid,fileid,userid,via,url,description,createdtime,host) values (?,?,?,?,?,?,?,?)", packageid, fileid, userid,via, url, description,DateTime.Now,GetHost(url));
     }
 
     void SetAttribute(string name, object value)

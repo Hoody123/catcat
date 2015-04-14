@@ -25,8 +25,6 @@ MPLoginDialog.New = function () {
                  if (dialog.onSuccess != null) {
                      dialog.onSuccess();
                  }
-                 else
-                     location.reload();
              }
              else {
                  MPMessageBox.New(MPMessageBox.Icons.Error, data.msg);

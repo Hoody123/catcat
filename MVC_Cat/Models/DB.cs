@@ -10,9 +10,11 @@ public class DB : IDisposable
     MySqlConnection _connection;
     MySqlTransaction _transaction = null;
     string _conStr = ConfigurationManager.ConnectionStrings["db"].ConnectionString;
-    public DB()
+    public DB(string str="")
     {
-        _connection = new MySqlConnection(_conStr);
+        if (str == "")
+            str = _conStr;
+        _connection = new MySqlConnection(str);
         _connection.Open();
     }
 

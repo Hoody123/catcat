@@ -19,7 +19,7 @@ MPTemplate.Widget.Image = function (data, options)
     else
     {
         strVar += "<div class=\"right\">";
-        strVar += "    <div class=\"praise\" title=\"赞一个\" data-id=\"{0}\" >赞<\/div>".Format(data.id);
+        strVar += "    <div class=\"praise\" title=\"赞\" data-id=\"{0}\" ><\/div>".Format(data.id);
         strVar += "<\/div>";
     }
     strVar += "    <\/div>";

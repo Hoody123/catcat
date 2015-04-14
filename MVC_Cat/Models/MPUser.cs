@@ -16,6 +16,8 @@ public class MPUser
         }
         set
         {
+            if (_name.Equals(value, StringComparison.OrdinalIgnoreCase))
+                return;
             try
             {
                 SetAttribute("Name", value);
@@ -37,6 +39,9 @@ public class MPUser
         }
         set
         {
+            if (_password == value)
+                return;
+
             SetAttribute("Password", value);
             _password = value;
         }
@@ -53,6 +58,9 @@ public class MPUser
         }
         set
         {
+            if (_defaultHead == value)
+                return;
+
             SetAttribute("DefaultHead", value);
             _defaultHead = value;
         }
@@ -67,6 +75,9 @@ public class MPUser
         }
         set
         {
+            if (_description.Equals(value, StringComparison.OrdinalIgnoreCase))
+                return;
+
             SetAttribute("Description", value);
             _description = value;
         }

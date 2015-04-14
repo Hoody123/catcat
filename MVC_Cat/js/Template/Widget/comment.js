@@ -4,7 +4,7 @@
 MPTemplate.Widget.Comment = function (data,option) {
     var strVar = "";
     strVar += "<div class=\"comment\">";
-    strVar += "<a class=\"avt\" href=\"{0}\">".Format(MPObject.User.Home(data.user));
+    strVar += "<a class=\"avt\" href=\"{0}\">".Format(MPObject.User.Pages.Home(data.user));
     strVar += " <img src=\"{0}\" />".Format(MPObject.User.Avt(data.user));
     strVar += "<\/a>";
     strVar += "<a class=\"name\">{0}<\/a>".Format(MPObject.User.Name(data.user));

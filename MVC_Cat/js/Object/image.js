@@ -4,6 +4,7 @@ MPObject.Image = {};
 
 MPObject.Image._info = function (image, width, shape) {
     var res = {};
+    shape = shape ? shape : "";
     switch (shape) {
         case "fw":
             {
@@ -19,8 +20,20 @@ MPObject.Image._info = function (image, width, shape) {
                 res.height = width;
             }
             break;
+        default:
+            {
+                res.url = imageHost + "/" + image.file.hash;
+                res.width = image.file.width;
+                res.height = image.file.height;
+            }
+            break;
     }
     return res;
+}
+
+MPObject.Image.sq236=function(image)
+{
+    return MPObject.Image._info(image, 236, "sq");
 }
 
 MPObject.Image.fw78 = function (image) {
@@ -42,6 +55,10 @@ MPObject.Image.fw75 = function (image) {
 
 MPObject.Image.fw236 = function (image) {
     return MPObject.Image._info(image, 236, "sq");
+}
+
+MPObject.Image.Origin = function (image) {
+    return MPObject.Image._info(image);
 }
 
 MPObject.Image.Resave = function (imageID, imageHash, description, source) {
