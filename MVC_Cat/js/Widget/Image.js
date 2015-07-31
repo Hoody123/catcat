@@ -3,13 +3,13 @@
 MPWidget.Image.Description = function (description)
 {
     description = MPHtmlEncode(description);
-    return description.replace(/(#.*#)/g, function (word)
+    return description.replace(/(#.*?#)/g, function (word)
     {
         var w = $.trim(word.substring(1, word.length - 1));
         if (w == "")
             return word;
 
-        return "<a href=\"/search/{0}\">{1}</a>".FormatNoEncode(encodeURIComponent(w), word);
+        return "<a href=\"{0}/search/{1}\">{2}</a>".FormatNoEncode(host, encodeURIComponent(w), word);
     });
 };
 MPWidget.Image.New = function (image,options)
@@ -38,8 +38,11 @@ MPWidget.Image.Bind = function ()
         var t = $(this);
         var id = t.attr("data-id");
         var hash = t.attr("data-hash");
-        var description = t.attr("data-description")
-        MPObject.Image.Edit(id, hash, description, "");
+        var source = t.attr("data-source");
+        var description = t.attr("data-description");
+        var packageID = t.attr("data-packageid");
+        var packagetitle = t.attr("data-packagetitle");
+        MPObject.Image.Edit(id, hash, description, source, packageID, packagetitle);
     }
 
     function img_click(e)

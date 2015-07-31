@@ -27,6 +27,21 @@ public class MPComment
         CreatedTime = Convert.ToDateTime(row[4]);
     }
 
+    public void Delelte()
+    {
+        using(var db=new DB())
+        {
+            db.BeginTransaction();
+            //删除这条评论@的人信息
+            db.ExecuteNonQuery("delete from comment_mention where commentid=?", ID);
+            //删除和这条评论有关的所有消息
+            db.ExecuteNonQuery("delete from message where target=? and (type=? or type=? or type=?", ID, MPMessageTypes.Comment, MPMessageTypes.Mention, MPMessageTypes.Reply);
+            //删除这条评论自身
+            db.ExecuteNonQuery("delete from comment where id=?", ID);
+            db.EndTransaction();
+        }
+    }
+
     public static int Create(int imageid, int userid, string text)
     {
         int id = DB.SInsert("insert into comment (imageid,userid,`text`) values (?,?,?)", imageid, userid, text);

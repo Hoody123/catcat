@@ -8,8 +8,9 @@ using System.IO;
 
 public static class Downloader
 {
-
     static int _downloadThreadCount = 0;
+
+    static int _maxDownloadThreadCount = 3;
 
     static Thread _mainThread = null;
 
@@ -46,28 +47,55 @@ public static class Downloader
 
     static void MainThreadWorker()
     {
+        //将所有已开始但未完成的所有任务设置为未开始
+        DB.SExecuteNonQuery("update download set state=? where state=?", MPDownloadStates.Unstarting, MPDownloadStates.Starting);
+
         while (true)
         {
-            DownloadTask task = null;
-
-            if (_tasks.Count == 0 && _downloadThreadCount == 0)
-                LoadTaskFromDB();
-
-            if (_tasks.Count != 0 && _downloadThreadCount < 3)
-            {
-                task = _tasks.Dequeue();
-            }
-
-            if (task == null)
+            if (_downloadThreadCount >= _maxDownloadThreadCount)
             {
                 Thread.Sleep(1000);
                 continue;
             }
 
+            var res = DB.SExecuteReader("select id,source,`from` from download where state=? limit 1", MPDownloadStates.Unstarting);
+            if (res.Count == 0)
+            {
+                Thread.Sleep(1000);
+                continue;
+            }
+
+            var id = Convert.ToInt32(res[0][0]);
+            var source = (string)res[0][1];
+            var from = (string)res[0][2];
+
+            DB.SExecuteNonQuery("update download set state=? where id=?", MPDownloadStates.Starting, id);
+
             Thread t = new Thread(new ParameterizedThreadStart(DownloadThredWorker));
             t.IsBackground = true;
-            t.Start(task);
+            t.Start(new object[] { id, source, from });
             _downloadThreadCount++;
+
+            //DownloadTask task = null;
+
+            //if (_tasks.Count == 0 && _downloadThreadCount == 0)
+            //    LoadTaskFromDB();
+
+            //if (_tasks.Count != 0 && _downloadThreadCount < 3)
+            //{
+            //    task = _tasks.Dequeue();
+            //}
+
+            //if (task == null)
+            //{
+            //    Thread.Sleep(1000);
+            //    continue;
+            //}
+
+            //Thread t = new Thread(new ParameterizedThreadStart(DownloadThredWorker));
+            //t.IsBackground = true;
+            //t.Start(task);
+            //_downloadThreadCount++;
         }
     }
 
@@ -94,70 +122,104 @@ public static class Downloader
 
     static void DownloadThredWorker(object obj)
     {
-        DownloadTask task = obj as DownloadTask;
+        var ps = obj as object[];
+        var id = (int)ps[0];
+        var source = (string)ps[1];
+        var from = (string)ps[2];
+        //DownloadTask task = obj as DownloadTask;
         string hash1 = "";
         string hash2 = "";
         string filePath1 = "";
         string filePath2 = "";
         int tryCount = 0;
 
-        try
+        //try
+        //{
+        filePath1 = _baseDirectory + "mp_done\\" + Tools.BytesToString(Guid.NewGuid().ToByteArray());
+        hash1 = DownloadFile(source, from, filePath1);
+        //if (hash1 == "")
+        //{
+        //    throw new MiaopassDownloadFailedException();
+        //}
+
+        while (tryCount < 5)
         {
-            filePath1 = _baseDirectory + "mp_done\\" + Tools.BytesToString(Guid.NewGuid().ToByteArray());
-            hash1 = DownloadFile(task.Source, task.From, filePath1);
-            if (hash1 == "")
+            //    if (tryCount == 5)
+            //        throw new MiaopassDownloadFailedException();
+
+            filePath2 = _baseDirectory + "mp_done\\" + Tools.BytesToString(Guid.NewGuid().ToByteArray());
+            hash2 = DownloadFile(source, from, filePath2);
+            //if (hash2 == "")
+            //{
+            //    throw new MiaopassDownloadFailedException();
+            //}
+
+            if (hash1 != hash2)
             {
-                throw new MiaopassDownloadFailedException();
+                File.Delete(filePath1);
+
+                filePath1 = filePath2;
+                hash1 = hash2;
+
+                tryCount++;
+
+                continue;
             }
-
-            while (true)
+            else
             {
-                if (tryCount == 5)
-                    throw new MiaopassDownloadFailedException();
-
-                filePath2 = _baseDirectory + "mp_done\\" + Tools.BytesToString(Guid.NewGuid().ToByteArray());
-                hash2 = DownloadFile(task.Source, task.From, filePath2);
-                if (hash2 == "")
-                {
-                    throw new MiaopassDownloadFailedException();
-                }
-
-                if (hash1 != hash2)
-                {
-                    File.Delete(filePath1);
-
-                    filePath1 = filePath2;
-                    hash1 = hash2;
-
-                    tryCount++;
-
-                    continue;
-                }
-                else
-                {
-                    break;
-                }
+                break;
             }
         }
-        catch (MiaopassException)
+        //}
+        //catch (MiaopassException)
+        //{
+        //    File.Delete(filePath1);
+        //    File.Delete(filePath2);
+        //    task.TryCount++;
+        //    return;
+        //}
+
+        try
+        {
+            if (hash1 == "" || hash2 == "")
+                throw new MiaopassException("文件下载失败");
+
+            int fileid = 0;
+            using (var filestream = File.OpenRead(filePath1))
+            {
+                fileid = MPFile.Create(filestream);
+            }
+
+            DB.SExecuteNonQuery("update download set state=?,fileid=? where id=?", MPDownloadStates.Finished, fileid, id);
+
+            var res = DB.SExecuteReader("select id,packageid,description from pick where downloadid=?", id);
+            foreach (var item in res)
+            {
+                var pickId = Convert.ToInt32(item[0]);
+                var packageId = Convert.ToInt32(item[1]);
+                var description = (string)item[2];
+                MPPackage package = null;
+                try
+                {
+                    package = new MPPackage(packageId);
+                }
+                catch
+                {
+                    continue;
+                }
+
+                MPImage.Create(packageId, fileid, package.UserID, 0, from, description);
+                DB.SExecuteNonQuery("delete from pick where id=?", pickId);
+            }
+        }
+        catch { }        //MPImage.Create(task.Package.ID, fileid, task.User.ID, 0, task.From, task.Description);
+        finally
         {
             File.Delete(filePath1);
             File.Delete(filePath2);
-            task.TryCount++;
-            return;
+            //DB.SExecuteNonQuery("delete from task_download where id=?", task.ID);
+            _downloadThreadCount--;
         }
-
-        int fileid = 0;
-        using (var filestream = File.OpenRead(filePath1))
-        {
-            fileid = MPFile.Create(filestream);
-        }
-        MPImage.Create(task.Package.ID, fileid, task.User.ID,  0, task.From, task.Description);
-
-        File.Delete(filePath1);
-        File.Delete(filePath2);
-        DB.SExecuteNonQuery("delete from task_download where id=?", task.ID);
-        _downloadThreadCount--;
     }
 }
 

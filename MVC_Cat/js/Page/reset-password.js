@@ -17,10 +17,10 @@ $(function () {
             MPMessageBox.New(MPMessageBox.Icons.Warn, "两次输入的密码不一致,请检查后重新输入");
             return;
         }
-        //搞不懂token要弄什么东西
-        $.post(host+"/ajax/confirm-reset-password", { token:ViewBag.Token, password: MPHtmlEncode(password.val()) }, function myfunction(data) {
+
+        $.post("", { password: MPHtmlEncode(password.val()) }, function myfunction(data) {
             if (data.code == 0) {
-                var dialog = MPMessageBox.New(MPMessageBox.Icons.OK, "注册成功,点击确认后返回主页");
+                var dialog = MPMessageBox.New(MPMessageBox.Icons.OK, "修改密码成功,点击确认后返回主页");
                 dialog.onOK = function () {
                     location.href = host;
                 };

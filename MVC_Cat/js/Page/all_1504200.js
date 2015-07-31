@@ -1,6 +1,5 @@
-﻿/// <reference path="main.js" />
-/// <reference path="Widget/Frame.js" />
-/// <reference path="Widget/Image.js" />
+﻿/// <reference path="include.js" />
+
 $(function ()
 {
     var frame = MPWidget.Frame.New();

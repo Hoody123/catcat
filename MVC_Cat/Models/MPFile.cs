@@ -5,6 +5,7 @@ using System.Web;
 using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Net;
 
 public class MPFile
 {
@@ -80,47 +81,53 @@ public class MPFile
                     int w = (int)(bitmap.Width / Math.Sqrt(1.0 * pixels / threshold));
                     using (var t = bitmap.FixWidth(w))
                     {
-                        OssFile.Create(md5, t.SaveAsJpeg());
+                        OssFile.Create(md5 + ".jpg", t.SaveAsJpeg());
                         width = t.Width;
                         height = t.Height;
                     }
                 }
                 else
                 {
-                    OssFile.Create(md5, bitmap.SaveAsJpeg());
+                    OssFile.Create(md5 + ".jpg", bitmap.SaveAsJpeg());
                 }
 
 
                 //上传236定宽
                 using (var t = bitmap.FixWidth(236))
                 {
-                    OssFile.Create(md5 + "_fw236", t.SaveAsJpeg());
+                    OssFile.Create(md5 + "_fw236.jpg", t.SaveAsJpeg());
                 }
 
                 //上传236方形
                 using (var t = bitmap.Square(236))
                 {
-                    OssFile.Create(md5 + "_sq236", t.SaveAsJpeg());
+                    OssFile.Create(md5 + "_sq236.jpg", t.SaveAsJpeg());
                 }
 
                 //上传75方形
                 using (var t = bitmap.Square(75))
                 {
-                    OssFile.Create(md5 + "_sq75", t.SaveAsJpeg());
+                    OssFile.Create(md5 + "_sq75.jpg", t.SaveAsJpeg());
                 }
 
                 //上传658定宽
                 using (var t = bitmap.FixWidth(658))
                 {
-                    OssFile.Create(md5 + "_fw658", t.SaveAsJpeg());
+                    OssFile.Create(md5 + "_fw658.jpg", t.SaveAsJpeg());
                 }
 
                 //上传78定宽
                 using (var t = bitmap.FixWidth(78))
                 {
-                    OssFile.Create(md5 + "_fw78", t.SaveAsJpeg());
+                    OssFile.Create(md5 + "_fw78.jpg", t.SaveAsJpeg());
                 }
-                return DB.SInsert("insert into file (width,height,md5) values (?,?,?)", width, height, md5);
+
+                //插入数据库
+                var fileId= DB.SInsert("insert into file (width,height,md5) values (?,?,?)", width, height, md5);
+
+
+
+                return fileId;
             }
         }
         catch (BadImageFormatException)
@@ -133,16 +140,16 @@ public class MPFile
         }
     }
 
-    public  void Delete()
+    public void Delete()
     {
         DB.SExecuteNonQuery("delete from file where id=?", ID);
         List<string> list = new List<string>();
-        list.Add(MD5);
-        list.Add(MD5 + "_fw236");
-        list.Add(MD5 + "_sq236");
-        list.Add(MD5 + "_sq75");
-        list.Add(MD5 + "_fw658");
-        list.Add(MD5 + "_fw78");
+        list.Add(MD5 + ".jpg");
+        list.Add(MD5 + "_fw236.jpg");
+        list.Add(MD5 + "_sq236.jpg");
+        list.Add(MD5 + "_sq75.jpg");
+        list.Add(MD5 + "_fw658.jpg");
+        list.Add(MD5 + "_fw78.jpg");
 
         OssFile.Delete(list);
     }

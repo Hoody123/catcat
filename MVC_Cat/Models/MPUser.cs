@@ -111,6 +111,34 @@ public class MPUser
         }
     }
 
+    DateTime _lastGetActivityTime = new DateTime();
+    public DateTime LastGetActivityTime
+    {
+        get
+        {
+            return _lastGetActivityTime;
+        }
+        set
+        {
+            SetAttribute("lastgetactivitytime", value);
+            _lastGetActivityTime = value;
+        }
+    }
+
+    DateTime _lastGetMessageTime = new DateTime();
+    public DateTime LastGetMessageTime
+    {
+        get
+        {
+            return _lastGetMessageTime;
+        }
+        set
+        {
+            SetAttribute("lastgetmessagetime", value);
+            _lastGetMessageTime = value;
+        }
+    }
+
     public MPUser(int id)
     {
         if (id == 0)
@@ -140,7 +168,7 @@ public class MPUser
 
     void Initialize(string condition, params object[] objs)
     {
-        var res = DB.SExecuteReader("select name,password,authority,email,defaulthead,description,sinauserid,sinaurl,id from user where " + condition, objs);
+        var res = DB.SExecuteReader("select name,password,authority,email,defaulthead,description,sinauserid,sinaurl,id,lastgetactivitytime,lastgetmessagetime from user where " + condition, objs);
 
         if (res.Count == 0)
             throw new MiaopassUserNotExistException();
@@ -155,6 +183,8 @@ public class MPUser
         _sinaUserID = Convert.ToInt64(row[6]);
         _sinaUrl = (string)row[7];
         ID = Convert.ToInt32(row[8]);
+        _lastGetActivityTime = Convert.ToDateTime(row[9]);
+        _lastGetMessageTime = Convert.ToDateTime(row[10]);
     }
 
     void SetAttribute(string attributeName, object value)
@@ -173,7 +203,9 @@ public class MPUser
             throw new MiaopassEmailConflictException();
         try
         {
-            return DB.SInsert("insert into user (name,password,email,description,sinauserid,sinaurl) values (?,?,?,'',0,'')", name, Tools.SHA256Hash(password), email);
+            var id= DB.SInsert("insert into user (name,password,email,description,sinauserid,sinaurl,lastgetactivitytime,lastgetmessagetime) values (?,?,?,'',0,'',now(),now())", name, Tools.SHA256Hash(password), email);
+            //BaiduUrlPusher.PushUser(id);
+            return id;
         }
         catch (MySql.Data.MySqlClient.MySqlException)
         {

@@ -4,12 +4,16 @@ MPTemplate.Page.User = function (data, options)
 {
     var user = MPObject.User;
     var strVar = "";
-    strVar += "<div class=\"widget-userinfo\">";
+    strVar += "<div class=\"page-user\">";
     strVar += "        <div class=\"inner\">";
     strVar += "            <div class=\"info\">";
     strVar += "                <img class=\"avt\" src=\"{0}\" />".Format(user.BigAvt(data));
     strVar += "                <div class=\"right\">";
-    strVar += "                    <div class=\"username\">{0}<\/div>".Format(user.Name(data));
+    strVar += "                    <h1 class=\"username\">{0}<\/h1>".Format(user.Name(data));
+    if (data.description != "")
+    {
+        strVar += "                    <h2 class=\"description\">{0}</h2>".Format(data.description);
+    }
     strVar += "                <\/div>";
     strVar += "                <div class=\"clear\"><\/div>";
     strVar += "                <div class=\"actions\">";

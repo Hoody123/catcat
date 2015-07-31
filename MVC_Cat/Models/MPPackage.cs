@@ -107,7 +107,13 @@ public class MPPackage
     {
         try
         {
-            return DB.SInsert("insert into package (userid,title,description,coverid) values (?,?,'',0)", userid, title);
+            title = title.Trim();
+            if (title == "")
+                throw new MiaopassException("标题不能为空");
+
+            var id= DB.SInsert("insert into package (userid,title,description,coverid) values (?,?,'',0)", userid, title);
+            //BaiduUrlPusher.PushPackage(id);
+            return id;
         }
         catch (MySql.Data.MySqlClient.MySqlException)
         {

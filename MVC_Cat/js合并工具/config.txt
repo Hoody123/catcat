@@ -2,6 +2,9 @@
 ../js/jquery.js
 ../js/jquery.cookie.js
 ../js/main.js
+../js/jquery.color.js
+../js/jquery.jcrop.js
+../js/jquery.caret.min.js
 
 ../js/dialog/dialog.js
 ../js/dialog/titledialog.js
@@ -14,6 +17,7 @@
 ../js/Dialog/CreatePackageDialog.js
 ../js/Dialog/CreateImageDialog.js
 ../js/Dialog/UploadDialog.js
+../js/Dialog/AvtCutDialog.js
 
 ../js/Format/User.js
 
@@ -26,6 +30,7 @@
 ../js/template/page/user.js
 ../js/template/page/setting.js
 ../js/template/page/package.js
+../js/template/page/from.js
 ../js/template/widget/package.js
 ../js/template/widget/image.js
 ../js/template/widget/comment.js
@@ -33,6 +38,9 @@
 ../js/template/widget/image-view.js
 ../js/template/widget/link.js
 ../js/template/widget/user.js
+../js/template/widget/add.js
+../js/template/widget/notice.js
+../js/template/dialog/avt-cut-dialog.js
 
 ../js/widget/widget.js
 
@@ -41,8 +49,6 @@
 ../js/Widget/image.js
 ../js/Widget/package.js
 ../js/Widget/image-view.js
-../js/Widget/user-info.js
-../js/Widget/package-info.js
 ../js/Widget/User.js
 ../js/Widget/window.js
 

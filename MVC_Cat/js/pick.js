@@ -9,7 +9,13 @@
 $(document).ready(function ()
 {
     //页面加载完毕后马上启动创建图片对话框
-    var createImageDialog = MPCreateImageDialog.New(MPData.source,"收集",MPData.description);
+    //var createImageDialog = MPCreateImageDialog.New(MPData.source,"收集",MPData.description);
+    var createImageDialog = MPCreateImageDialog.New({
+        previewUrl: MPData.source,
+        title: "收集",
+        description: MPData.description,
+        check:{source:MPData.source}
+    });
     //不显示关闭按钮
     createImageDialog.HideClose();
     //添加onOK处理函数

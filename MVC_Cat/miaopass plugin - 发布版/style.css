@@ -1,0 +1,19 @@
+﻿.mp_pick_btn{
+    position:absolute;
+    display:none;
+    margin:5px;
+    padding:3px 8px;
+    font-size:14px;
+    border:1px solid white;
+    background-color:rgba(0,0,0,0.7);
+    color:white;
+    opacity:0.8;
+    z-index:2147483647 ;
+    cursor:pointer;
+    border-radius:3px;
+    overflow:hidden;
+}
+
+.mp_pick_btn:hover{
+    opacity:1;
+}

@@ -29,6 +29,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <ExcludeGeneratedDebugSymbol>false</ExcludeGeneratedDebugSymbol>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -115,6 +116,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\Cleaner.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AjaxController.cs" />
     <Compile Include="Controllers\AllController.cs" />
@@ -129,18 +131,22 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\BaiduUrlPusher.cs" />
     <Compile Include="Models\DB.cs" />
     <Compile Include="Models\Downloader.cs" />
     <Compile Include="Models\Exceptions.cs" />
     <Compile Include="Models\JSON.cs" />
+    <Compile Include="Models\JSON.Notice.cs" />
     <Compile Include="Models\Mail.cs" />
     <Compile Include="Models\MPComment.cs" />
     <Compile Include="Models\MPEnums.cs" />
     <Compile Include="Models\MPFile.cs" />
     <Compile Include="Models\MPImage.cs" />
     <Compile Include="Models\MPPackage.cs" />
+    <Compile Include="Models\MPTag.cs" />
     <Compile Include="Models\MPUser.cs" />
     <Compile Include="Models\OssFile.cs" />
+    <Compile Include="Models\SpiderFilter.cs" />
     <Compile Include="Models\Tools.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -152,6 +158,7 @@
     <Content Include="css\setting.css" />
     <Content Include="css\signup-email.css" />
     <Content Include="css\signup.css" />
+    <Content Include="css\new.css" />
     <Content Include="dialogs\crop-dialog.html" />
     <Content Include="dialogs\link.html" />
     <Content Include="dialogs\reset-password-success.html" />
@@ -170,7 +177,10 @@
     <Content Include="img\close_20_20_hover.png" />
     <Content Include="img\close_32_32.png" />
     <Content Include="img\close_32_32_hover.png" />
+    <Content Include="img\comment_16_16.png" />
+    <Content Include="img\comment_hover_16_16.png" />
     <Content Include="img\error_24_24.png" />
+    <Content Include="img\heart_grey_12_12.png" />
     <Content Include="img\heart_grey_16_14.png" />
     <Content Include="img\heart_grey_hover_16_14.png" />
     <Content Include="img\heart_red_16_14.png" />
@@ -181,18 +191,24 @@
     <Content Include="img\Magnet_16_16.png" />
     <Content Include="img\menu_20_20.png" />
     <Content Include="img\menu_20_20_hover.png" />
+    <Content Include="img\notice_box_triangle.png" />
     <Content Include="img\ok_24_24.png" />
     <Content Include="img\plus_20_20.png" />
     <Content Include="img\plus_20_20_hover.png" />
+    <Content Include="img\plus_30_30.png" />
+    <Content Include="img\plus_30_30_hover.png" />
     <Content Include="img\processing.gif" />
+    <Content Include="img\resave_12_12.png" />
     <Content Include="img\right_29_50.png" />
     <Content Include="img\search_20_20.png" />
     <Content Include="img\search_20_20_hover.png" />
     <Content Include="img\sq_36.jpg" />
     <Content Include="img\triangle-down_20_20.png" />
     <Content Include="img\triangle_right_down_4_4.png" />
+    <Content Include="img\up_32_32.png" />
     <Content Include="img\warn_24_24.png" />
-    <Content Include="js\all.js" />
+    <Content Include="img\zoom_in_16_16.png" />
+    <Content Include="js\Page\all_1504200.js" />
     <Content Include="js\Dialog\AvtCutDialog.js" />
     <Content Include="js\Dialog\CreateImageDialog.js" />
     <Content Include="js\Dialog\CreatePackageDialog.js" />
@@ -210,37 +226,37 @@
     <Content Include="js\image.js" />
     <Content Include="js\include.js" />
     <Content Include="js\initialize.js" />
+    <Content Include="js\jquery.color.js" />
     <Content Include="js\jquery.cookie.js" />
+    <Content Include="js\jquery.Jcrop.js" />
     <Content Include="js\jquery.js" />
     <Content Include="js\main.js" />
-    <Content Include="js\miaopass.js" />
     <Content Include="js\Object\image.js" />
     <Content Include="js\Object\package.js" />
     <Content Include="js\Object\user.js" />
     <Content Include="js\package.js" />
-    <Content Include="js\Page\package.js" />
-    <Content Include="js\Page\search.js" />
-    <Content Include="js\Page\setting.js" />
+    <Content Include="js\Page\from_1504200.js" />
+    <Content Include="js\Page\package_1504210.js" />
+    <Content Include="js\Page\search_1504200.js" />
+    <Content Include="js\Page\setting_1504200.js" />
+    <Content Include="js\Page\user_1504200.js" />
     <Content Include="js\pick.js" />
-    <Content Include="js\Render\Render.Body.Image.js" />
-    <Content Include="js\Render\Render.Body.js" />
-    <Content Include="js\Render\Render.Frame.js" />
-    <Content Include="js\Render\Render.Head.js" />
-    <Content Include="js\Render\Render.js" />
-    <Content Include="js\Render\RenderElement.js" />
-    <Content Include="js\reset-password.js" />
+    <Content Include="js\Page\reset-password.js" />
     <Content Include="js\search.js" />
-    <Content Include="js\signup-email.js" />
+    <Content Include="js\Page\signup-email.js" />
     <Content Include="js\Template\Dialog\avt-cut-dialog.js" />
+    <Content Include="js\Template\Page\from.js" />
     <Content Include="js\Template\Page\package.js" />
     <Content Include="js\Template\Page\search.js" />
     <Content Include="js\Template\Page\setting.js" />
     <Content Include="js\Template\Page\user.js" />
     <Content Include="js\Template\template.js" />
+    <Content Include="js\Template\Widget\add.js" />
     <Content Include="js\Template\Widget\comment.js" />
     <Content Include="js\Template\Widget\frame.js" />
     <Content Include="js\Template\Widget\image-view.js" />
     <Content Include="js\Template\Widget\link.js" />
+    <Content Include="js\Template\Widget\notice.js" />
     <Content Include="js\Template\Widget\user.js" />
     <Content Include="js\user.js" />
     <Content Include="js\Widget\Frame.js" />
@@ -260,12 +276,24 @@
     <Content Include="Views\Account\ResetPassword.aspx" />
     <Content Include="Views\Account\SignupEmail.aspx" />
     <Content Include="Views\All\Index.aspx" />
+    <Content Include="Views\All\index_spider.aspx" />
+    <Content Include="Views\From\Index.aspx" />
     <Content Include="Views\Image\Index.aspx" />
+    <Content Include="Views\Image\Index_Spider.aspx" />
+    <Content Include="Views\Image\Zoom.aspx" />
     <Content Include="Views\Package\Index.aspx" />
+    <Content Include="Views\Package\Index_Spider.aspx" />
+    <Content Include="Views\Search\Index_spider.aspx" />
+    <Content Include="Views\Shared\Comment.ascx" />
+    <Content Include="Views\Shared\Image.ascx" />
     <Content Include="Views\Pick\Index.aspx" />
     <Content Include="Views\Search\Index.aspx" />
     <Content Include="Views\Setting\Index.aspx" />
+    <Content Include="Views\Shared\Package.ascx" />
+    <Content Include="Views\Shared\User.ascx" />
+    <Content Include="Views\Update\Index.aspx" />
     <Content Include="Views\User\Index.aspx" />
+    <Content Include="Views\User\Index_Spider.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -280,15 +308,18 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="extension\chrome\" />
+    <Folder Include="miaopass 说明文档\" />
+    <Folder Include="MP_Done\" />
+    <Folder Include="MP_Temp\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="MP_Done\placeholder" />
-    <Content Include="MP_Temp\placeholder" />
     <None Include="Properties\PublishProfiles\jpb.pubxml" />
     <Content Include="Views\Shared\mp.Master" />
+    <Content Include="Views\Shared\mp_spider.Master" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

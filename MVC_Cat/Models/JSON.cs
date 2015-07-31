@@ -1,10 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Newtonsoft.Json;
-using System.Dynamic;
-
 
 namespace JSON
 {
@@ -75,12 +70,14 @@ namespace JSON
         public int images_count { set; get; }
         public int praise_count { set; get; }
         public bool followed { set; get; }
+        public string description { set; get; }
 
         public UserDetail(MPUser user, MPUser currentUser)
         {
             id = user.ID;
             name = user.Name;
             default_head = user.DefaultHead;
+            description = user.Description;
             follows_count = Convert.ToInt32(DB.SExecuteScalar("select count(*) from following where userid=?", user.ID));
             followers_count = Convert.ToInt32(DB.SExecuteScalar("select count(*) from following where type=? and info=?", MPFollowingTypes.User, user.ID));
             packages_count = Convert.ToInt32(DB.SExecuteScalar("select count(*) from package where userid=?", user.ID));
@@ -126,10 +123,12 @@ namespace JSON
     {
         public int id { get; set; }
         public JSON.File file { get; set; }
+        public string description { get; set; }
         public Image(MPImage image)
         {
             id = image.ID;
             file = new JSON.File(new MPFile(image.FileID));
+            description = image.Description;
         }
 
     }
@@ -186,6 +185,8 @@ namespace JSON
         public string host { get; set; }
         public string description { get; set; }
         public bool praised { get; set; }
+        public int resave_count { get; set; }
+        public int praise_count { get; set; }
         public List<JSON.Comment> comments { get; set; }
         public string time { get; set; }
 
@@ -199,6 +200,14 @@ namespace JSON
             user = new JSON.User(new MPUser(image.UserID));
             description = image.Description;
             praised = false;
+
+            resave_count = GetPraiseCount(image);
+
+            {
+                var res = DB.SExecuteReader("select count(*) from praise where type=? and info=?", MPPraiseTypes.Image, image.ID);
+                praise_count = Convert.ToInt32(res[0][0]);
+            }
+
             if (currentUser != null)
             {
                 if (DB.SExecuteScalar("select userid from praise where userid=? and type=? and info=?", currentUser.ID, MPPraiseTypes.Image, image.ID) != null)
@@ -208,13 +217,34 @@ namespace JSON
             }
 
             comments = new List<Comment>();
-            var res = DB.SExecuteReader("select id from comment where imageid=?", image.ID);
-            foreach (var item in res)
             {
-                comments.Add(new JSON.Comment(new MPComment(Convert.ToInt32(item[0]))));
+                var res = DB.SExecuteReader("select id from comment where imageid=?", image.ID);
+                foreach (var item in res)
+                {
+                    comments.Add(new JSON.Comment(new MPComment(Convert.ToInt32(item[0]))));
+                }
             }
-
             time = image.CreatedTime.ToString();
+        }
+
+        int GetPraiseCount(MPImage image)
+        {
+            var res = DB.SExecuteReader("select id from image where via=?", image.ID);
+            var count = res.Count;
+            if (count != 0)
+            {
+                foreach (var item in res)
+                {
+                    try
+                    {
+                        int id = Convert.ToInt32(item[0]);
+                        var img = new MPImage(id);
+                        count += GetPraiseCount(img);
+                    }
+                    catch (MiaopassException) { }
+                }
+            }
+            return count;
         }
     }
 }

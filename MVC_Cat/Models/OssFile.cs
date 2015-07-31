@@ -83,9 +83,12 @@ static public class OssFile
     public static void Move(string source, string destination)
     {
         var request = new CopyObjectRequest(_ossPublicBucketName, source, _ossPublicBucketName, destination);
-
-        _ossClient.CopyObject(request);
-        Delete(source);
+        try
+        {
+            _ossClient.CopyObject(request);
+            Delete(source);
+        }
+        catch { }
     }
 
     public static bool IsFileExist(string path)

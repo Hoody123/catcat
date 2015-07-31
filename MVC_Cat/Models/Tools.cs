@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Text;
-using System.Collections.Specialized;
 using System.IO;
 using System.Security.Cryptography;
 using System.Configuration;
@@ -16,6 +13,7 @@ public static class Tools
     public static string ImageServerHost = ConfigurationManager.AppSettings["BaseUrl"];
     public static string Host = ConfigurationManager.AppSettings["Host"];
     public static string MiaopassString = " - 喵帕斯~(*´▽｀)ノ";
+    public static string WnsAccessToken = GetSetting("WnsAccessToken");
 
     public static string GetSetting(string keyName)
     {
@@ -173,7 +171,7 @@ public static class Tools
        using(var g=Graphics.FromImage(desc))
        {
            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.High;
-           g.DrawImage(img, new Rectangle(x, y, width, height), new Rectangle(0, 0, desc.Width, desc.Height), GraphicsUnit.Pixel);
+           g.DrawImage(img, new Rectangle(0, 0, desc.Width, desc.Height),new Rectangle(x, y, width, height),  GraphicsUnit.Pixel);
        }
        return desc;
     }

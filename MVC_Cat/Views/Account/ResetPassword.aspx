@@ -1,19 +1,17 @@
-﻿<%@ Page Title="" Language="C#"  Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
+﻿<%@ Page Title="" Language="C#" Inherits="System.Web.Mvc.ViewPage<dynamic>" MasterPageFile="~/Views/Shared/mp.Master" %>
 
-<!DOCTYPE html>
+<asp:Content runat="server" ContentPlaceHolderID="head">
+    <script src="<%=ResolveUrl("~/js/page/reset-password_1404260.js") %>"></script>
+</asp:Content>
 
-<html">
-<head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-      <link href="<%=ResolveUrl("~/css/main.css") %>" rel="stylesheet" />
-    <script src="<%=ResolveUrl("~/js/reset-password.js") %>"></script>
-    <title>重置密码</title>
-</head>
-<body>
-    <form method="post" action="?token=<%=ViewBag.Token %>">
-        <div><span>新密码:</span><input type="password" id="password1" /></div>
-        <div><span>确认密码:</span><input type="password" id="password2" /></div>
-        <input type="submit" id="submit"/>
-    </form>
-</body>
-</html>
+<asp:Content runat="server" ContentPlaceHolderID="body">
+    <div class="page-account page-reset-password">
+        <div class="title">请输入新密码</div>
+        <div class="i">密码:</div>
+        <input type="password" id="password1" name="password" />
+        <div class="i">确认密码:</div>
+        <input type="password" id="password2" />
+        <div id="submit">提交</div>
+    </div>
+</asp:Content>
+

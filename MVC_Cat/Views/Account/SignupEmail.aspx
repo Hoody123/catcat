@@ -1,12 +1,11 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/mp.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <link href="<%=ResolveUrl("~/css/signup-email.css") %>" rel="stylesheet" />
-    <script src="<%=ResolveUrl("~/js/signup-email.js") %>"></script>
+    <script src="<%=ResolveUrl("~/js/signup-email_1404260.js") %>"></script>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="server">
-        <div class="form">
+        <div class="page-account page-signup ">
         <div class="title">请完善注册信息</div>
         <input type="text" value="<%=ViewBag.Email %>" readonly="readonly">
         <div class="i">昵称:</div>

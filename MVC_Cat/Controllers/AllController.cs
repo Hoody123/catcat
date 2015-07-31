@@ -8,7 +8,7 @@ namespace MVC_Cat.Controllers
 {
     public class AllController : Controller
     {
-        public ActionResult Index(int max=0)
+        public ActionResult Index(int max = 0)
         {
             int limit = 20;
             MPUser user = Session["user"] as MPUser;
@@ -25,18 +25,28 @@ namespace MVC_Cat.Controllers
                 catch { }
             }
 
-            if(Request.QueryString["ajax"]!=null)
+            if (Request.QueryString["ajax"] != null)
             {
                 return Json(list, JsonRequestBehavior.AllowGet);
             }
 
             ViewBag.Title = "首页_喵帕斯";
-            ViewBag.MPData = new
+
+            bool isSpider = Convert.ToBoolean(RouteData.Values["isSpider"]);
+            if (isSpider)
             {
-                user=new JSON.User(user),
-                images=list
-            };
-            return View();
+                ViewBag.List = list;
+                return View("index_spider");
+            }
+            else
+            {
+                ViewBag.MPData = new
+                {
+                    user = new JSON.User(user),
+                    images = list
+                };
+                return View();
+            }
         }
 
     }

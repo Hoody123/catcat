@@ -16,8 +16,9 @@ MPWidget.Package.Bind = function () {
     function edit_click() {
         //提取id
         var id = $(this).attr("data-id");
-        location.href = "/package/" + id + "/edit";
-        //跳转到编辑页
+        var title = $(this).attr("data-title");
+        var description = $(this).attr("data-description");
+        MPObject.Package.Edit(id, title, description);
     }
 
     function follow_click() {

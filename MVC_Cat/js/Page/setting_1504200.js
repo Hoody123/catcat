@@ -56,7 +56,7 @@ $(function () {
                             var container = $(".page-setting .avt");
                             var pimg = container.find("img");
                             var ratio = container.width() / avt_size;
-                            pimg.attr("src", imageHost + "/" + file.hash);
+                            pimg.attr("src", imageHost + "/" + file.hash+"_fw658.jpg");
                             pimg.css({
                                 width: Math.round(ratio * file.width) + 'px',
                                 height: Math.round(ratio * file.height) + 'px',

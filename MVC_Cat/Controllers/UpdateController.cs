@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.IO;
+using System.Net;
 
 namespace MVC_Cat.Controllers
 {
@@ -14,28 +15,22 @@ namespace MVC_Cat.Controllers
 
         public ActionResult Index()
         {
-            using(var db = new DB("Database=miaopass;Data Source=rdser6nv3jmfumj.mysql.rds.aliyuncs.com;Port=3301;User Id=miaopass_boss;Password=CTonCD9yBIsa1Xhd;charset=utf8"))
-            {
-                var packages = db.ExecuteReader("select name from t_package");
-                foreach (var item in packages)
-                {
-                    Response.Write(string.Format("http://www.miaopass.net/package.aspx?name={0}<br/>",item[0]));
-                }
-                var images = db.ExecuteReader("select count(*),t.name from r_package_image as r,t_package as t where r.packageid=t.id group by r.packageid");
-                foreach (var item in images)
-                {
-                    for (int i = 0; i < Convert.ToInt32( item[0]); i++)
-                    {
-                        Response.Write(string.Format("http://www.miaopass.net/image.aspx?name={0}&p={1}<br/>", item[1],i));
-                    }
-                }
-                var tags = db.ExecuteReader("select text from t_tag");
-                foreach (var item in tags)
-                {
-                    Response.Write(Uri.EscapeUriString(string.Format("http://www.miaopass.net/search.aspx?kw={0}", item[0])) + "<br/>");
-                }
-            }
-            return null;
+            return HttpNotFound();
+            //var res = DB.SExecuteReader("select id from file");
+            //var wc = new WebClient();
+            //var host = Tools.GetSetting("WnsHost");
+            //foreach (var item in res)
+            //{
+            //    var id = Convert.ToInt32(item[0]);
+            //    var file = new MPFile(id);
+            //    var description = (string)DB.SExecuteScalar("select description from image where fileid=?", file.ID);
+            //    if (description == null)
+            //        continue;
+
+            //    description =Uri.EscapeDataString( Server.HtmlEncode(description));
+            //    wc.DownloadString(host + string.Format("ajax/update?token={3}&md5={0}&width={1}&height={2}&description={4}", file.MD5, file.Width, file.Height, Tools.WnsAccessToken, description));
+            //}
+            //return Content("ok");
         }
 
     }

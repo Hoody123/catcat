@@ -15,6 +15,16 @@ $(function ()
             break;
 
         default:
+            if (MPData.user.id == MPData.package.user.id)
+            {
+                var add = MPTemplate.Widget.Add;
+                var element = $(add(MPData.package, add.Options.AddImage));
+                element.click(function ()
+                {
+                    MPObject.Image.CreateImage();
+                });
+                waterfall.PushElement(element);
+            }
             waterfallPush(MPWidget.Image, MPTemplate.Widget.Image.Options.ShowSource, "id");
             break;
     }
@@ -39,40 +49,45 @@ $(function ()
 
     //注意下方,注释怎么都写在了程序末尾?!
     $(document).on("click", ".page-package .package-edit", edit_click)
-        .on("click", ".page-package .packge-follow", follow_click)
-    .on("click", ".page-package .packge-unfollow", unfollow_click);
+        .on("click", ".page-package .package-follow", follow_click)
+    .on("click", ".page-package .package-unfollow", unfollow_click);
 
     function edit_click()
     {
         //提取id
         var id = $(this).attr("data-id");
-        MPCreatePackageDialog.New(true, id, "这是标题", "description");
+        var title = $(this).attr("data-title");
+        var description = $(this).attr("data-description");
+        MPObject.Package.Edit(id, title, description);
     }
 
+    //关注操作
     function follow_click()
     {
         var t = $(this);
         var id = t.attr("data-id");
         MPObject.Package.Follow(id, function ()
         {
-            t.removeClass("follow");
-            t.addClass("unfollow");
-            MPMessageBox.New(MPMessageBox.Icons.OK, "关注成功!");
+            t.removeClass("package-follow");
+            t.addClass("package-unfollow");
+            ///这里以后考虑使用messageTip来代替
+            //MPMessageBox.New(MPMessageBox.Icons.OK, "关注成功!");
         })
-    }//关注操作
+    }
 
+    //取消关注
     function unfollow_click()
     {
         var t = $(this);
-        var box = MPMessageBox.New(MPMessageBox.Icons.Warn, "确认要取消关注?");
-        box.onOK = function myfunction()
+        //var box = MPMessageBox.New(MPMessageBox.Icons.Warn, "确认要取消关注?");
+        //box.onOK = function myfunction()
+        //{
+        var id = t.attr("data-id");
+        MPObject.Package.UnFollow(id, function ()
         {
-            var id = t.attr("data-id");
-            MPObject.Package.UnFollow(id, function ()
-            {
-                t.removeClass("unfollow");
-                t.addClass("follow");
-            })
-        }
-    }//取消关注
+            t.removeClass("package-unfollow");
+            t.addClass("package-follow");
+        })
+        //}
+    }
 })

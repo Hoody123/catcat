@@ -1,0 +1,10 @@
+http://localhost:4644/image/113
+{"not_valid":["http:\/\/localhost:4644\/image\/113"],"remain":49,"success":0}
+
+http://localhost:4644/image/114
+{"not_valid":["http:\/\/localhost:4644\/image\/114"],"remain":49,"success":0}
+
+2015/5/18 17:13:17
+http://localhost:4644/image/115
+{"not_valid":["http:\/\/localhost:4644\/image\/115"],"remain":45,"success":0}
+

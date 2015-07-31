@@ -2,10 +2,10 @@
 
 MPAvtCutDialog = {
     //创建对话框,参数file为file对象{hash,width,height}
-    New: function (file) {
+    New: function (file)
+    {
         var dialog = MPTitleDialog.New(MPTemplate.Dialog.AvtCutDialog(file), "裁剪头像");
         var origin = dialog.Content.find(".main");
-        var preview = dialog.Content.find("#preview");
         dialog.offset_x = null;
         dialog.offset_y = null;
         dialog.size = null;
@@ -14,29 +14,40 @@ MPAvtCutDialog = {
 
         var jcrop_api,
         boundx,
-        boundy,
-
-        // Grab some information about the preview pane
-        $preview = $('.previews');
+        boundy;
 
         //console.log('init',[xsize,ysize]);
         origin.Jcrop({
             onChange: updatePreview,
             onSelect: updatePreview,
-            aspectRatio: 1
-        }, function () {
+            aspectRatio: 1,
+            bgFade: true
+        }, function ()
+        {
             // Use the API to get the real image size
             var bounds = this.getBounds();
             boundx = bounds[0];
             boundy = bounds[1];
+            var _w;
+            if (boundx < boundy)
+                _w = Math.round(boundx);
+            else
+                _w =Math.round(boundy);
+            var x1 = Math.round(boundx / 2 - _w / 2);
+            var y1 = Math.round(boundy / 2 - _w / 2);
+            setSelect: [x1, y1, x1 + _w, x2 + _w];
+
             // Store the API in the jcrop_api variable
             jcrop_api = this;
 
         });
 
-        function updatePreview(c) {
-            if (parseInt(c.w) > 0) {
-                $(".previews").children("div").each(function () {
+        function updatePreview(c)
+        {
+            if (parseInt(c.w) > 0)
+            {
+                $(".previews").children("div").each(function ()
+                {
 
                     var $pcontainer = $(this),
                     $pimg = $(this).find("img"),
@@ -55,20 +66,23 @@ MPAvtCutDialog = {
         };
 
 
-        dialog.ButtonOK.click(function () {
+        dialog.ButtonOK.click(function ()
+        {
             var ratio = file.width / $(".jcrop-holder").width();
             var c = jcrop_api.tellScaled();
             dialog.offset_x = Math.round(c.x * ratio);
             dialog.offset_y = Math.round(c.y * ratio);
             //获取比例
             dialog.size = Math.round(c.w * ratio);
-            if (dialog.onSuccess) {
+            if (dialog.onSuccess)
+            {
                 dialog.onSuccess();
             }
             dialog.Close();
         })
 
-        dialog.Content.find(".cancel").click(function () {
+        dialog.Content.find(".cancel").click(function ()
+        {
             dialog.Close();
         })
         return dialog;

@@ -21,30 +21,44 @@ MPTemplate.Widget.Frame = function ()
     }
     else
     {
-        strVar1 = "";
-        strVar1 += "<div class=\"nav add-nav\">";
-        strVar1 += "    <div class=\"nav-link\" title=\"添加\">";
-        strVar1 += "    <\/div>";
-        strVar1 += "    <div class=\"hide-menu\"><\/div>";
-        strVar1 += "<\/div>";
-        strVar1 += "<div class=\"nav user-nav\">";
-        strVar1 += "    <a class=\"nav-link\" href=\"{0}\">";
-        strVar1 += "        <img class=\"avt\" src=\"{1}\" />";
-        strVar1 += "        <div class=\"arrow\"><\/div>";
-        strVar1 += "    <\/a>";
-        strVar1 += "    <div class=\"hide-menu\">";
-        strVar1 += "        <a class=\"item\" href=\"{0}\">我的主页<\/a>";
-        strVar1 += "        <div class=\"seperator\"><\/div>";
-        strVar1 += "        <a class=\"item\" href=\"{2}\">我的关注<\/a>";
-        strVar1 += "        <a class=\"item\" href=\"{3}\">我的粉丝<\/a>";
-        strVar1 += "        <div class=\"seperator\"><\/div>";
-        strVar1 += "        <a class=\"item\" href=\"/setting\">设置<\/a>";
-        strVar1 += "        <div class=\"item\" id=\"logout\">退出<\/div>";
-        strVar1 += "    <\/div>";
-        strVar1 += "<\/div>";
-
-        var fuser = MPFormat.User.New(MPData.user);
-        strVar += strVar1.Format(fuser.Home(), fuser.Avt(), fuser.Following(), fuser.Follower());
+        var User = MPObject.User;
+        //消息提示
+        strVar += "<div class=\"nav notice-nav\">";        
+        strVar += "    <div class=\"nav-link\" title=\"通知\">";
+        strVar += "         <em class=\"count\"></em>";
+        strVar += "    <\/div>";       
+        strVar += "    <div class=\"hide-menu\">";
+        strVar += "         <div class=\"triangle\"></div>";
+        strVar += "         <ul>";
+        strVar += "             <li id=\"message\" data-max=\"0\">消息</li>";
+        strVar += "             <li id=\"activity\" data-max=\"0\">动态</li>";
+        strVar += "         </ul>";
+        strVar += "         <div class=\"clear\"></div>";
+        strVar += "         <div class=\"content \">";
+        strVar += "         </div>";
+        strVar += "    </div>";
+        strVar += "<\/div>";
+        //用户按钮
+        strVar += "<div class=\"nav add-nav\">";
+        strVar += "    <div class=\"nav-link\" title=\"添加\">";
+        strVar += "    <\/div>";
+        strVar += "    <div class=\"hide-menu\"><\/div>";
+        strVar += "<\/div>";
+        strVar += "<div class=\"nav user-nav\">";
+        strVar += "    <a class=\"nav-link\" href=\"{0}\">".Format(User.Pages.Home(MPData.user));
+        strVar += "        <img class=\"avt\" src=\"{0}\" />".Format(User.Avt(MPData.user));
+        strVar += "        <div class=\"arrow\"><\/div>";
+        strVar += "    <\/a>";
+        strVar += "    <div class=\"hide-menu\">";
+        strVar += "        <a class=\"item\" href=\"{0}\">我的主页<\/a>".Format(User.Pages.Home(MPData.user));
+        strVar += "        <div class=\"seperator\"><\/div>";
+        strVar += "        <a class=\"item\" href=\"{0}\">我的关注<\/a>".Format(User.Pages.Following(MPData.user));
+        strVar += "        <a class=\"item\" href=\"{0}\">我的粉丝<\/a>".Format(User.Pages.Follower(MPData.user));
+        strVar += "        <div class=\"seperator\"><\/div>";
+        strVar += "        <a class=\"item\" href=\"/setting\">设置<\/a>";
+        strVar += "        <div class=\"item\" id=\"logout\">退出<\/div>";
+        strVar += "    <\/div>";
+        strVar += "<\/div>";
     }
     strVar += "                <\/div>";
     strVar += "            <\/div>";
@@ -52,6 +66,9 @@ MPTemplate.Widget.Frame = function ()
     strVar += "    <\/div>";
     strVar += "    <div class=\"wrapper\">";
     strVar += "        <div class=\"body\"><\/div>";
+    strVar += "    <\/div>";
+    strVar += "    <div class=\"float-tools\">";
+    strVar += "        <em class=\"top\" title=\"回到顶部\"><\/em>";
     strVar += "    <\/div>";
     strVar += "<\/div>";
 

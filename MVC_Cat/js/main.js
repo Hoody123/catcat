@@ -254,6 +254,13 @@ var MPWaterFall = {
             return dataList[n - 1][returnField];
         }
 
+        waterFall.PushElement = function (element)
+        {
+            var item = Add(element);
+            Arrange(item);
+            _list.push(item);
+        }
+
         waterFall.Insert = function (startIndex, newItems)
         {
             var list = [];
@@ -364,7 +371,8 @@ function MPCheckLogin(showDialog)
         if (showDialog === true)
         {
             var dialog = MPLoginDialog.New();
-            dialog.onSuccess = function () {
+            dialog.onSuccess = function ()
+            {
                 location.reload();
             }
         }
@@ -433,7 +441,7 @@ function MPLogOut()
 
 function MPMenu(parent, menu, staytime, delaytime)//parent为点击目标 menu自行定义 staytime为鼠标离开menu后滞留时间 delaytime为点击后延时处理时间
 {
-    var _stayTime = staytime ? staytime : 1000;
+    var _stayTime = staytime ? staytime : 500;
     var _delayTime = delaytime ? delaytime : 0;
     var _timerIdDisplay;
     var _timerIdHide;
@@ -472,6 +480,17 @@ function MPMenu(parent, menu, staytime, delaytime)//parent为点击目标 menu�
             }, _stayTime);
         })
     }
+
+    $(window).click(function (e)
+    {
+        var point = {};
+        point.X = e.clientX;
+        point.Y = e.clientY;
+        if (!MPCheckInEle(_menu,point))
+        {
+            _menu.hide();
+        }
+    })
     //检查菜单是否为点击目标的子元素
     function CheckChild(obj, parentObj)
     {
@@ -490,7 +509,7 @@ function MPMenu(parent, menu, staytime, delaytime)//parent为点击目标 menu�
 
 }
 
-function MPPopUpMenu(parent, menu, callback)//parent为点击目标 menu为弹出窗口 callback为menu关闭后响应的事件
+function MPPopUpMenu(parent, menu, onMenuClose, callback)//parent为点击目标 menu为弹出窗口 onMenuClose为menu关闭后响应的事件,callback回调
 {
     var _parent = $(parent);
     var _menu = $(menu);
@@ -498,6 +517,8 @@ function MPPopUpMenu(parent, menu, callback)//parent为点击目标 menu为弹�
     {
         e.stopPropagation();
         _menu.show();
+        if (callback)
+            callback();
         var clickfn;
         $(window).on("click", clickfn = function (event)
         {
@@ -506,16 +527,16 @@ function MPPopUpMenu(parent, menu, callback)//parent为点击目标 menu为弹�
             point.Y = event.clientY;
             if (MPCheckInEle(_menu, point))
             {
-                _menu.show();
+                _menu.show();                
             }
             else
             {
                 _menu.hide();
                 $(window).off("click", clickfn);
             }
-            if (callback != undefined || callback != null)
+            if (onMenuClose)
             {
-                callback();
+                onMenuClose();
             }
         })
     })

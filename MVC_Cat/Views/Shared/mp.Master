@@ -6,15 +6,17 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title><%=ViewBag.Title==null?"喵帕斯":ViewBag.Title %></title>
-    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="shortcut icon" href="<%=ResolveUrl("~/favicon.ico") %>" />
     <meta name="keywords" content="<%=ViewBag.Keywords==null?"动漫 acg 图片 图包": ViewBag.Keywords%>" />
     <meta name="description" content="<%=ViewBag.Description==null?"专注于动漫图片的收集和分享": ViewBag.Description%>" />
     <link rel="stylesheet" type="text/css" href="<%=ResolveUrl("~/css/main.css") %>" />
-    <script type="text/javascript" src="http://libs.baidu.com/jquery/1.9.1/jquery.js"></script>
-    <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery.cookie.js")%>"></script>
+<%--    <link rel="stylesheet" type="text/css" href="<%=ResolveUrl("~/css/new.css") %>" />--%>
+    <script src="http://libs.baidu.com/jquery/1.9.1/jquery.js"></script>
+    <script src="<%=ResolveUrl("~/js/jquery.cookie.js")%>"></script>
     <script src="<%=ResolveClientUrl("~/js/main.js") %>"></script>
     <script src="<%=ResolveClientUrl("~/js/jquery.color.js") %>"></script>
     <script src="<%=ResolveClientUrl("~/js/jquery.Jcrop.js") %>"></script>
+    <script src="<%=ResolveClientUrl("~/js/jquery.caret.min.js") %>"></script>
 
     <script src="<%=ResolveClientUrl("~/js/Dialog/Dialog.js") %>"></script>
     <script src="<%=ResolveClientUrl("~/js/Dialog/TitleDialog.js") %>"></script>
@@ -31,17 +33,18 @@
 
     <script src="<%=ResolveClientUrl("~/js/Format/User.js") %>"></script>
 
+    <script src="<%=ResolveClientUrl("~/js/Page/reset-password.js") %>"></script>
+
     <script src="<%=ResolveClientUrl("~/js/Object/user.js") %>"></script>
     <script src="<%=ResolveClientUrl("~/js/Object/image.js") %>"></script>
     <script src="<%=ResolveClientUrl("~/js/Object/package.js") %>"></script>
-
-    <script src="<%=ResolveClientUrl("~/js/Widget/widget.js") %>"></script>
 
     <script src="<%=ResolveClientUrl("~/js/template/template.js") %>"></script>
     <script src="<%=ResolveClientUrl("~/js/template/page/search.js") %>"></script>
     <script src="<%=ResolveClientUrl("~/js/template/page/user.js") %>"></script>
     <script src="<%=ResolveClientUrl("~/js/template/page/setting.js") %>"></script>
     <script src="<%=ResolveClientUrl("~/js/template/page/package.js") %>"></script>
+    <script src="<%=ResolveClientUrl("~/js/template/page/from.js") %>"></script>
     <script src="<%=ResolveClientUrl("~/js/template/widget/package.js") %>"></script>
     <script src="<%=ResolveClientUrl("~/js/template/widget/image.js") %>"></script>
     <script src="<%=ResolveClientUrl("~/js/template/widget/comment.js") %>"></script>
@@ -49,19 +52,22 @@
     <script src="<%=ResolveClientUrl("~/js/template/widget/image-view.js") %>"></script>
     <script src="<%=ResolveClientUrl("~/js/template/widget/link.js") %>"></script>
     <script src="<%=ResolveClientUrl("~/js/template/widget/user.js") %>"></script>
+    <script src="<%=ResolveClientUrl("~/js/template/widget/add.js") %>"></script>
+    <script src="<%=ResolveClientUrl("~/js/template/widget/notice.js") %>"></script>
     <script src="<%=ResolveClientUrl("~/js/template/dialog/avt-cut-dialog.js") %>"></script>
+
+    <script src="<%=ResolveClientUrl("~/js/Widget/widget.js") %>"></script>
 
     <script src="<%=ResolveClientUrl("~/js/Widget/Frame.js") %>"></script>
     <script src="<%=ResolveClientUrl("~/js/Widget/Search.js") %>"></script>
     <script src="<%=ResolveClientUrl("~/js/Widget/image.js") %>"></script>
     <script src="<%=ResolveClientUrl("~/js/Widget/package.js") %>"></script>
     <script src="<%=ResolveClientUrl("~/js/Widget/image-view.js") %>"></script>
-    <script src="<%=ResolveClientUrl("~/js/Widget/user-info.js") %>"></script>
     <script src="<%=ResolveClientUrl("~/js/Widget/User.js") %>"></script>
     <script src="<%=ResolveClientUrl("~/js/Widget/window.js") %>"></script>
 
     <script src="<%=ResolveClientUrl("~/js/initialize.js") %>"></script>
-    <%--<script src="<%=ResolveClientUrl("~/js/miaopass.js") %>"></script>--%>
+<%--    <script src="<%=ResolveClientUrl("~/js/miaopass_1504200.js") %>"></script>--%>
     <script type="text/javascript">
         host =location.protocol+"//"+ location.host;
         imageHost = "<%=Tools.GetSetting("ImageHost")%>";

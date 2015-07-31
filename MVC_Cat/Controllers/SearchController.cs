@@ -68,14 +68,27 @@ namespace MVC_Cat.Controllers
             }
 
             ViewBag.Title=keyword+"_喵帕斯";
-            ViewBag.MPData = new
+
+            bool isSpider = Convert.ToBoolean(RouteData.Values["isSpider"]);
+
+            if (isSpider)
             {
-                user=new JSON.User(user),
-                keyword=keyword,
-                sub1=sub1,
-                datas=datas
-            };
-            return View();
+                ViewBag.List = datas;
+                ViewBag.Sub = sub1;
+                ViewBag.Keyword = keyword;
+                return View("index_spider");
+            }
+            else
+            {
+                ViewBag.MPData = new
+                {
+                    user = new JSON.User(user),
+                    keyword = keyword,
+                    sub1 = sub1,
+                    datas = datas
+                };
+                return View();
+            }
         }
 
     }

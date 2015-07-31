@@ -29,7 +29,11 @@ namespace MVC_Cat.Controllers
             var user=Session["user"] as MPUser;
             foreach (var item in res)
             {
-                images.Add(new JSON.ImageDetail(new MPImage(Convert.ToInt32(item[0])),user));
+                try
+                {
+                    images.Add(new JSON.ImageDetail(new MPImage(Convert.ToInt32(item[0])), user));
+                }
+                catch (MiaopassException) { }
             }
 
             if(Request.QueryString["ajax"]!=null)
