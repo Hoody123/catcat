@@ -39,7 +39,6 @@ MPAvtCutDialog = {
 
             // Store the API in the jcrop_api variable
             jcrop_api = this;
-
         });
 
         function updatePreview(c)
